@@ -1,3 +1,4 @@
+import { AuthComponent } from './auth.component';
 import { AccForgotComponent } from './acc-forgot/acc-forgot.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -11,7 +12,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 const routes: Routes = [
   {
     path: '',
-    component: NbAuthComponent,
+    component: AuthComponent,
     children: [
       {
         path: 'login',
@@ -51,4 +52,5 @@ export const components = [
   AccConfirmComponent,
   ChangePassComponent,
   AccForgotComponent,
+  AuthComponent
 ];

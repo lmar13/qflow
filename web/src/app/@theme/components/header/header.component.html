@@ -27,6 +27,8 @@
         [title]="user?.role"
       ></nb-user>
     </nb-action>
+    <nb-action *ngIf="!isAuth"><a [routerLink]="'/auth/signup'">Sign Up</a></nb-action>
+    <nb-action *ngIf="!isAuth"><a [routerLink]="'/auth/login'">Log In</a></nb-action>
     <nb-action *ngIf="isAuth" class="control-item" disabled icon="nb-notifications"></nb-action>
 
     <nb-action *ngIf="isAuth" class="control-item" icon="nb-email"></nb-action>
