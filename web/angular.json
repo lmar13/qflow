@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "trello-like-app": {
+    "qflow": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "trello-like-app:build"
+            "browserTarget": "qflow:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "trello-like-app:build:production"
+              "browserTarget": "qflow:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "trello-like-app:build"
+            "browserTarget": "qflow:build"
           }
         },
         "test": {
@@ -117,7 +117,7 @@
         }
       }
     },
-    "trello-like-app-e2e": {
+    "qflow-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -126,7 +126,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "trello-like-app:serve"
+            "devServerTarget": "qflow:serve"
           }
         },
         "lint": {
@@ -141,7 +141,7 @@
       }
     }
   },
-  "defaultProject": "trello-like-app",
+  "defaultProject": "qflow",
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"

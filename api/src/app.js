@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(session({
-    secret: 'trello-like-app',
+    secret: 'qflow',
     cookie: {
       maxAge: 60000
     },

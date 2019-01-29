@@ -3,7 +3,11 @@
      [class.right]="position === 'inverse'">
   <div class="logo-containter">
     <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
-    <div class="logo" (click)="goToHome()">trello<span>-like-app</span></div>
+    <div class="logo" (click)="goToHome()">
+      <img width="35" *ngIf="whiteLogo" src="assets/images/logo/qflow_white.png">
+      <img width="35" *ngIf="!whiteLogo" src="assets/images/logo/qflow_blue.png">
+      <span style="margin-left: 15px;">qflow</span>
+    </div>
   </div>
   <ngx-theme-switcher></ngx-theme-switcher>
 </div>

@@ -34,13 +34,13 @@ const sendEmail = (data) => {
     });
   };
 
-  readHTMLFile('./api/emails/emailTemplate.html', function(err, html) {
+  readHTMLFile('./src/emails/email-template.html', function(err, html) {
     var template = handlebars.compile(html);
     var link = `${req.get('origin')}/auth/${confirm ? 'activation' : 'reset'}/${token.token}`;
     var replacements = {
-      title: confirm ? '<span style="margin-right: 30px;">WELCOME TO</span>' : '',
-      logo: '<img src="cid:logo"/>',
-      subtitle: confirm ? 'We hope you will have<br> an Awesome time!' : `Hello ${user.name} ${user.surname}!<br><br> We are sorry that You forgot Your password. We are here to help You!`,
+      // title: confirm ? '<span style="margin-right: 30px;">WELCOME TO</span>' : '',
+      logo: '<img src="cid:logo" width="70"/>',
+      subtitle: confirm ? 'WELCOME! We hope you will have<br> an Awesome time!' : `Hello ${user.name} ${user.surname}!<br><br> We are sorry that You forgot Your password. We are here to help You!`,
       info: confirm ? 'We are very excited that you have joined us. Just one click away from activating your account.' : 'Please click button below to reset password. In the next step You will be asked to provide new one.',
       link,
     };
@@ -55,13 +55,13 @@ const sendEmail = (data) => {
                  : `Please click link below below to reset password. In the next step You will be asked to provide new one \n\n${link}`, // plain text body
       html: htmlToSend, // html body
       attachments: [{
-        filename: 'logo.png',
-        path: './api/emails/logo.png',
+        filename: 'qflow_blue.png',
+        path: './src/assets/logo/qflow_blue.png',
         cid: 'logo',
       },
       {
         filename: 'bg_email_min.png',
-        path: './api/emails/bg_email_min.png',
+        path: './src/assets/bg_email_min.png',
         cid: 'bg_email',
       }]
     }
@@ -201,8 +201,8 @@ module.exports = function(app) {
     User.findOne({ email: req.body.email }, function (err, user) {
       if(!user) return res.status(400).json({ msg: 'We were unable to find a user with that email.' });
       const token = crypto.randomBytes(16).toString('hex');
-      user.resetPasswordToken = token;
-      user.resetPasswordExpires = Date.now() + 3600000;
+      // user.resetPasswordToken = token;
+      // user.resetPasswordExpires = Date.now() + 3600000;
 
       user.save(function(err, user) {
         if(err) return res.status(500).json({ errors: 'Unable to save user' })

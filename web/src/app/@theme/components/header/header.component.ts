@@ -1,7 +1,7 @@
 import { AuthService } from './../../../@core/auth/shared/auth.service';
 import { Component, Input, OnInit } from '@angular/core';
 
-import { NbMenuService, NbSidebarService } from '@nebular/theme';
+import { NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { filter, map } from 'rxjs/operators';
@@ -16,6 +16,8 @@ export class HeaderComponent implements OnInit {
 
   @Input() position = 'normal';
 
+  whiteLogo = true;
+
   user: User;
   isAuth: boolean;
 
@@ -25,6 +27,7 @@ export class HeaderComponent implements OnInit {
               private menuService: NbMenuService,
               private userService: UserService,
               private authService: AuthService,
+              private themeService: NbThemeService,
               private analyticsService: AnalyticsService) {
   }
 
@@ -38,6 +41,9 @@ export class HeaderComponent implements OnInit {
         map(({item: { title }}) => title)
       )
       .subscribe(title => title === 'Log out' ? this.authService.logout(): true);
+
+    this.themeService.onThemeChange().subscribe((theme: any) => this.whiteLogo = theme.name === 'default' ? false : true);
+    // this.themeService.onThemeChange().subscribe((theme: any) => console.log(theme));
   }
 
   toggleSidebar(): boolean {
