@@ -21,22 +21,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'nb-locked',
     children: [
       {
-        title: 'Login',
-        link: '/auth/login',
-      },
-      {
-        title: 'Register',
-        link: '/auth/signup',
-      },
-      {
-        title: 'Account confirmation',
-        link: '/auth/reconfirm',
-      },
-      {
-        title: 'Reset Password',
-        link: '/auth/reset-password',
-      },
-      {
         title: 'Users',
         link: '/pages/admin/users',
       },
