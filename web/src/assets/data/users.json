@@ -1,0 +1,21 @@
+[{
+  "name": "TestName",
+  "surname": "TestSurname",
+  "email": "test@example.com",
+  "empId": "1234567",
+  "role": "user"
+},
+{
+  "name": "Admin",
+  "surname": "AdminSurname",
+  "email": "admin@example.com",
+  "empId": "6065178",
+  "role": "admin"
+},
+{
+  "name": "Janko",
+  "surname": "Muzykant",
+  "email": "jankomuzykant@example.com",
+  "empId": "7654321",
+  "role": "user"
+}]

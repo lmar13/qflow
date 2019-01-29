@@ -1,0 +1,39 @@
+<h1 id="title" class="title">Account Recovery</h1>
+
+  <p class="sub-title">Provide email for sending reset token.</p>
+
+  <nb-alert *ngIf="hasError" outline="danger" role="alert">
+    <p class="alert-title"><b>Oh snap!</b></p>
+    <ul class="alert-message-list">
+      <li class="alert-message">Email cannot be sent</li>
+      <!-- <li *ngFor="let error of errors" class="alert-message">{{ error }}</li> -->
+    </ul>
+  </nb-alert>
+
+  <nb-alert *ngIf="!hasError && submitted" outline="success" role="alert">
+    <p class="alert-title"><b>Success!</b> Email with reset token has been sent</p>
+  </nb-alert>
+
+  <form>
+
+    <div class="form-control-group">
+      <label class="label" for="input-email">Email address:</label>
+      <input nbInput
+            fullWidth
+            [(ngModel)]="email"
+            name="email"
+            id="input-email"
+            pattern=".+@.+\..+"
+            placeholder="Email address"
+            autofocus>
+
+    </div>
+
+    <button nbButton
+            fullWidth
+            status="success"
+            (click)="sendEmail()"
+            >
+      Send Email
+    </button>
+  </form>

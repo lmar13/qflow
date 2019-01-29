@@ -1,0 +1,47 @@
+<h1 id="title" class="title">Account Confirmation</h1>
+<ng-container *ngIf="showConfirm">
+  <p class="sub-title">
+    Your account has been successfully activated.
+    <br><br>
+    You can now
+    <button
+      style="margin-left: 10px;"
+      nbButton
+      fullWidth
+      status="success"
+      (click)="goToLogin()">
+      Log In
+    </button>
+  </p>
+
+
+</ng-container>
+
+
+<ng-container *ngIf="!showConfirm">
+  <p class="sub-title">We were unable to activate Your account. Your token can be invalid or expired. <br>Provide email to resend an activation token.</p>
+
+  <form>
+
+    <div class="form-control-group">
+      <label class="label" for="input-email">Email address:</label>
+      <input nbInput
+            fullWidth
+            [(ngModel)]="email"
+            name="email"
+            id="input-email"
+            pattern=".+@.+\..+"
+            placeholder="Email address"
+            autofocus>
+
+    </div>
+
+    <button nbButton
+            fullWidth
+            status="success"
+            (click)="resendEmail()"
+            >
+      Resend Email
+    </button>
+  </form>
+</ng-container>

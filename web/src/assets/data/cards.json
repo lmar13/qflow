@@ -1,0 +1,89 @@
+[{
+  "title": "Planning card",
+  "content": "",
+  "columnId": "5c3a75a39071a597f1c814af",
+  "boardId": "5c3a778a9071a597f1c814b3",
+  "order": 0,
+  "owner": {
+    "_id": "5c408129915516ab04398a1f",
+    "email": "admin@example.com"
+  },
+  "assignedUsers": [{
+    "value": "5c408129915516ab04398a1f",
+    "display": "admin@example.com",
+    "readonly": true
+  },{
+    "value": "5c3ef704390018378d7d5616",
+    "display": "test@example.com",
+    "readonly": false
+  }]
+},
+{
+  "title": "Development card",
+  "content": "",
+  "columnId": "5c3a75a39071a597f1c814b0",
+  "boardId": "5c3a778a9071a597f1c814b3",
+  "order": 0,
+  "owner": {
+    "_id": "5c408129915516ab04398a1f",
+    "email": "admin@example.com"
+  },
+  "assignedUsers": [{
+    "value": "5c408129915516ab04398a1f",
+    "display": "admin@example.com",
+    "readonly": true
+  },{
+    "value": "5c3ef704390018378d7d5616",
+    "display": "test@example.com",
+    "readonly": false
+  }]
+},
+{
+  "title": "Testing card",
+  "content": "",
+  "columnId": "5c3a75a39071a597f1c814b1",
+  "boardId": "5c3a778a9071a597f1c814b3",
+  "order": 0,
+  "owner": {
+    "_id": "5c408129915516ab04398a1f",
+    "email": "admin@example.com"
+  },
+  "assignedUsers": [{
+    "value": "5c408129915516ab04398a1f",
+    "display": "admin@example.com",
+    "readonly": true
+  },{
+    "value": "5c3ef704390018378d7d5616",
+    "display": "test@example.com",
+    "readonly": false
+  },{
+    "value": "5c41ee5b09b14453f8ddfebc",
+    "display": "jank.muzykant@refinitiv.com",
+    "readonly": false
+  }]
+},
+{
+  "title": "Archive card",
+  "content": "",
+  "columnId": "5c3a75a39071a597f1c814b2",
+  "boardId": "5c3a778a9071a597f1c814b3",
+  "order": 0,
+  "owner": {
+    "_id": "5c3ef704390018378d7d5616",
+    "email": "test@example.com"
+  },
+  "assignedUsers": [{
+    "value": "5c408129915516ab04398a1f",
+    "display": "admin@example.com",
+    "readonly": false
+  },{
+    "value": "5c3ef704390018378d7d5616",
+    "display": "test@example.com",
+    "readonly": true
+  }]
+}]
+
+{ "_id" : ObjectId("5c3a75a39071a597f1c814af"), "title" : "Planning" }
+{ "_id" : ObjectId("5c3a75a39071a597f1c814b0"), "title" : "Development" }
+{ "_id" : ObjectId("5c3a75a39071a597f1c814b1"), "title" : "Testing" }
+{ "_id" : ObjectId("5c3a75a39071a597f1c814b2"), "title" : "Ready to archive" }

@@ -1,0 +1,28 @@
+[{
+  "title": "Planning card",
+  "content": "",
+  "columnId": "1",
+  "boardId": "5c3a778a9071a597f1c814b3",
+  "order": 0
+},
+{
+  "title": "Development card",
+  "content": "",
+  "columnId": "2",
+  "boardId": "5c3a778a9071a597f1c814b3",
+  "order": 0
+},
+{
+  "title": "Testing card",
+  "content": "",
+  "columnId": "3",
+  "boardId": "5c3a778a9071a597f1c814b3",
+  "order": 0
+},
+{
+  "title": "Archive card",
+  "content": "",
+  "columnId": "4",
+  "boardId": "5c3a778a9071a597f1c814b3",
+  "order": 0
+}]

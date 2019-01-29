@@ -1,0 +1,18 @@
+[
+  {
+      "assignedUsers": ["6065178"],
+      "title": "test"
+  },
+  {
+      "assignedUsers": ["1"],
+      "title": "New board"
+  },
+  {
+      "assignedUsers": [],
+      "title": "New board"
+  },
+  {
+    "assignedUsers": ["6065178"],
+    "title": "New board2"
+  }
+]

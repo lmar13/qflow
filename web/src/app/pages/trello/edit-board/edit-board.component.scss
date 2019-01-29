@@ -1,0 +1,90 @@
+nb-card {
+  min-width: 50vw;
+}
+
+nb-card-footer {
+  button {
+    margin-right: 5px;
+  }
+}
+
+i {
+  font-weight: bold;
+  font-size: 28px;
+  float: right;
+  cursor: pointer;
+}
+
+
+@import '../../../../../node_modules/ngx-chips/core/styles/core/core';
+
+$foundation-primary: #37317a;
+$foundation-primary-dark: darken($foundation-primary, 10%);
+$foundation-primary-dark-x2: darken($foundation-primary, 20%);
+
+// this is the container's theme
+$foundation-theme: (
+    container-border-bottom: none
+);
+
+// this is the tag's theme
+$foundation-tag-theme: (
+    background: $foundation-primary-dark,
+    background-focused: $foundation-primary-dark-x2,
+    background-active: $foundation-primary-dark-x2,
+    background-hover: $foundation-primary-dark-x2,
+    // color: black,
+    color-hover: #ffffff,
+    // border-radius: 2px,
+
+
+    font-size: 1rem,
+    // padding: 0.75rem 1.125rem,
+    border: 2px solid #342e73,
+    color: #ffffff,
+    border-radius: 0.75rem,
+);
+
+$foundation-tag-hover-theme : (
+    box-shadow: none,
+);
+
+// this is the delete icon's theme
+$foundation-icon-theme: (
+    fill: #fff,
+    fill-focus: #eee,
+    transition: all 0.35s,
+);
+
+// apply theme to the container
+::ng-deep div.ng2-tag-input.foundation-theme {
+    border-radius: 0.75rem;
+    // background-color: #37317a;
+    background-color: transparent;
+    border: 2px solid #342e73;
+    color: #ffffff;
+    &:focus, &:hover {
+      border: 2px solid #342e73;
+    }
+}
+
+::ng-deep .ng2-tag-input.ng2-tag-input--focused {
+  border-bottom: none;
+}
+
+// apply theme to the tags
+::ng-deep .ng2-tag-input.foundation-theme tag {
+    @include tag-theme($foundation-tag-theme);
+    &:hover, &:focus {
+      @include tag-theme($foundation-tag-hover-theme);
+    }
+}
+
+::ng-deep .ng2-tag-input.foundation-theme input {
+  background: transparent;
+}
+
+// apply theme to the delete icon
+::ng-deep .ng2-tag-input.foundation-theme tag delete-icon {
+    @include icon-theme($foundation-icon-theme);
+}

@@ -1,0 +1,19 @@
+.brand-logo {
+    width: 135px;
+    height: 60px;
+    float: right;
+}
+
+.emailEnd {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    margin-bottom: 10px;
+    position: absolute;
+    top: 32px;
+    transition: all 1s ease-in-out;
+}
+
+.second {
+    transform: translateY(48px);
+    background-color: transparent;
+}

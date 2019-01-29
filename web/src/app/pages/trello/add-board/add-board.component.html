@@ -1,0 +1,52 @@
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      {{ title }} Board
+      <i class="nb-close" (click)="ref.close()"></i>
+    </nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="form">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" formControlName="title" fullWidth shape="semi-round" nbInput placeholder="Title">
+          <div *ngIf="form.controls['title'].invalid && form.controls['title'].dirty">
+            <small *ngIf="form.controls['title'].hasError('required')" class="text-danger">Field is required!</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col">
+              <label for="title">Start Date</label>
+              <input nbInput formControlName="startDate" fullWidth [nbDatepicker]="startDateControl">
+              <nb-datepicker #startDateControl></nb-datepicker>
+          </div>
+          <div class="col">
+              <label for="title">End Date</label>
+              <input nbInput formControlName="endDate" fullWidth [nbDatepicker]="endDateControl">
+              <nb-datepicker #endDateControl></nb-datepicker>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="title">Assaigned Users</label>
+          <tag-input  formControlName="assignedUsers"
+                      [theme]="'foundation-theme'"
+                      [onlyFromAutocomplete]="true"
+                      [modelAsStrings]="false">
+            <tag-input-dropdown [showDropdownIfEmpty]="true"
+                                [autocompleteItems]="requestAutocompleteItems"
+                                [zIndex]="1100">
+            </tag-input-dropdown>
+          </tag-input>
+        </div>
+        <!-- <div class="form-group">
+            <label for="title">Owner</label>
+            <input type="text" formControlName="owner" fullWidth shape="semi-round" nbInput readonly>
+          </div> -->
+      </form>
+    </nb-card-body>
+    <nb-card-footer>
+          <button nbButton (click)="submit()" [disabled]="!this.form.valid">Submit</button>
+          <button nbButton (click)="form.reset()">Reset</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<span (click)="open(dialog)">{{ title }}</span>

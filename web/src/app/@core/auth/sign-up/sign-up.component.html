@@ -1,0 +1,165 @@
+<h1 id="title" class="title">Register</h1>
+
+<nb-alert *ngIf="hasLoginError && submitted" outline="danger" role="alert">
+  <p class="alert-title"><b>Oh snap!</b></p>
+  <ul class="alert-message-list">
+    <li class="alert-message">Something went wrong</li>
+  </ul>
+</nb-alert>
+
+<!-- <nb-alert *ngIf="showMessages.success && messages?.length && !submitted" outline="success" role="alert">
+  <p class="alert-title"><b>Hooray!</b></p>
+  <ul class="alert-message-list">
+    <li *ngFor="let message of messages" class="alert-message">{{ message }}</li>
+  </ul>
+</nb-alert> -->
+
+<form [formGroup]="registerForm">
+  <div class="form-control-group row">
+    <div class="col">
+      <label class="label" for="input-name">Name:</label>
+      <input nbInput
+            formControlName="name"
+            id="input-name"
+            name="name"
+            placeholder="Name"
+            autofocus
+            fullWidth
+            [status]="registerForm.controls['name'].dirty ? (registerForm.controls['name'].invalid  ? 'danger' : 'success') : ''"
+            required
+            [attr.aria-invalid]="registerForm.controls['name'].invalid && registerForm.controls['name'].dirty ? true : null">
+      <ng-container *ngIf="registerForm.controls['name'].invalid && registerForm.controls['name'].dirty">
+        <p class="error-message" *ngIf="registerForm.controls['name'].hasError('required')">
+          Name is required!
+        </p>
+      </ng-container>
+    </div>
+    <div class="col">
+        <label class="label" for="input-surname">Surname:</label>
+        <input nbInput
+              formControlName="surname"
+              id="input-surname"
+              name="surname"
+              placeholder="Surname"
+              autofocus
+              fullWidth
+              [status]="registerForm.controls['surname'].dirty ? (registerForm.controls['surname'].invalid  ? 'danger' : 'success') : ''"
+              required
+              [attr.aria-invalid]="registerForm.controls['surname'].invalid && registerForm.controls['surname'].dirty ? true : null">
+        <ng-container *ngIf="registerForm.controls['surname'].invalid && registerForm.controls['surname'].dirty">
+          <p class="error-message" *ngIf="registerForm.controls['surname'].hasError('required')">
+            Surname is required!
+          </p>
+        </ng-container>
+      </div>
+  </div>
+
+  <div class="form-control-group">
+    <label class="label" for="input-email">Email address:</label>
+    <input nbInput
+           formControlName="email"
+           id="input-email"
+           name="email"
+           pattern=".+@.+..+"
+           placeholder="Email address"
+           fullWidth
+           [status]="registerForm.controls['email'].dirty ? ( registerForm.controls['email'].invalid  ? 'danger' : 'success') : ''"
+           required
+           [attr.aria-invalid]="registerForm.controls['email'].invalid && registerForm.controls['email'].dirty ? true : null">
+    <ng-container *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].dirty">
+      <p class="error-message" *ngIf="registerForm.controls['email'].hasError('required')">
+        Email is required!
+      </p>
+      <p class="error-message" *ngIf="registerForm.controls['email'].hasError('invalidEmail')">
+        Email should be valid and registered in refinitiv.com domain
+      </p>
+    </ng-container>
+  </div>
+
+
+  <div class="form-control-group">
+    <label class="label" for="input-empId">Employee ID:</label>
+    <input nbInput
+           formControlName="empId"
+           id="input-empId"
+           name="empId"
+           placeholder="Employee ID"
+           fullWidth
+           [status]="registerForm.controls['empId'].dirty ? ( registerForm.controls['empId'].invalid  ? 'danger' : 'success') : ''"
+           required
+           [attr.aria-invalid]="registerForm.controls['empId'].invalid && registerForm.controls['empId'].dirty ? true : null">
+    <ng-container *ngIf="registerForm.controls['empId'].invalid && registerForm.controls['empId'].dirty">
+      <p class="error-message" *ngIf="registerForm.controls['empId'].hasError('required')">
+        Employee ID is required!
+      </p>
+      <p class="error-message" *ngIf="registerForm.controls['empId'].hasError('invalidEmpId')">
+        Employee ID should be valid one!
+      </p>
+    </ng-container>
+  </div>
+
+  <div class="form-control-group row" formGroupName="passwords">
+    <div class="col">
+      <label class="label" for="input-password">Password:</label>
+      <input nbInput
+            formControlName="pass"
+            type="password"
+            id="input-password"
+            name="pass"
+            placeholder="Password"
+            fullWidth
+            [status]="registerForm.get('passwords.pass').dirty ? (registerForm.get('passwords.pass').invalid  ? 'danger' : 'success') : ''"
+            required
+            [attr.aria-invalid]="registerForm.get('passwords.pass').invalid && registerForm.get('passwords.pass').dirty ? true : null">
+      <ng-container *ngIf="registerForm.get('passwords.pass').invalid && registerForm.get('passwords.pass').dirty">
+        <p class="error-message" *ngIf="registerForm.get('passwords.pass').hasError('required')">
+          Password is required!
+        </p>
+        <p class="error-message" *ngIf="registerForm.get('passwords.pass').hasError('minlength')">
+          Password should contains at least 4 characters
+        </p>
+      </ng-container>
+    </div>
+    <div class="col">
+      <label class="label" for="input-re-password">Repeat password:</label>
+      <input nbInput
+            formControlName="confirmPass"
+            type="password"
+            id="input-re-password"
+            name="confirmPass"
+            placeholder="Confirm Password"
+            fullWidth
+            [status]="registerForm.get('passwords.confirmPass').dirty ? (registerForm.hasError('notEquivalent', 'passwords') ? 'danger' : 'success') : ''"
+            required
+            [attr.aria-invalid]="registerForm.get('passwords.confirmPass').invalid && registerForm.get('passwords.confirmPass').dirty ? true : null">
+      <ng-container *ngIf="registerForm.get('passwords.confirmPass').dirty">
+        <p class="error-message" *ngIf="registerForm.get('passwords.confirmPass').hasError('required')">
+          Password confirmation is required!
+        </p>
+        <p class="error-message" *ngIf="registerForm.hasError('notEquivalent', 'passwords')">
+          Password does not match the confirm password.
+        </p>
+      </ng-container>
+    </div>
+
+  </div>
+
+  <!-- <div class="form-control-group accept-group" *ngIf="getConfigValue('forms.register.terms')">
+    <nb-checkbox name="terms" [(ngModel)]="user.terms" [required]="getConfigValue('forms.register.terms')">
+      Agree to <a href="#" target="_blank"><strong>Terms & Conditions</strong></a>
+    </nb-checkbox>
+  </div> -->
+
+  <button nbButton
+          fullWidth
+          status="success"
+          [disabled]="(submitted && !hasLoginError) || !registerForm.valid"
+          [class.btn-pulse]="submitted"
+          (click)="signUp()">
+    Register
+  </button>
+</form>
+
+<section class="another-action" aria-label="Sign in">
+  Already have an account? <a class="text-link" routerLink="../login">Log in</a>
+</section>

@@ -1,0 +1,25 @@
+<nb-card>
+  <nb-card-body>
+
+    <nb-actions size="small">
+      <nb-action>Open</nb-action>
+      <nb-action>Add</nb-action>
+      <nb-action>Edit</nb-action>
+      <nb-action>Delete</nb-action>
+      <!-- <nb-action icon="nb-compose"></nb-action> -->
+      <!-- <nb-action icon="nb-person"></nb-action>
+      <nb-action icon="nb-home"></nb-action> -->
+      <nb-action icon="nb-gear" disabled></nb-action>
+      <!-- <nb-action>
+        Custom Action
+      </nb-action> -->
+    </nb-actions>
+
+  </nb-card-body>
+</nb-card>
+<ng2-smart-table
+  [settings]="settings"
+  [source]="source"
+  (deleteConfirm)="onDeleteConfirm($event)"
+  (editConfirm)="onEditConfirm($event)"
+></ng2-smart-table>

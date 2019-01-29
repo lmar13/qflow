@@ -1,0 +1,24 @@
+<nb-card>
+    <nb-card-body>
+
+      <nb-actions size="small">
+        <nb-action (click)="getRowData()">Open</nb-action>
+        <nb-action>
+          <ngx-add-board  [users]="users"
+                          [title]="'Add'"
+                          (onAddBoard)="addBoard($event)"></ngx-add-board>
+        </nb-action>
+        <nb-action>
+          <ngx-edit-board [users]="users"
+                          [title]="'Edit'"
+                          [board]="selectedRow"
+                          (onEditBoard)="editBoard($event)"></ngx-edit-board>
+        </nb-action>
+        <nb-action>Delete</nb-action>
+        <nb-action icon="nb-gear" disabled></nb-action>
+      </nb-actions>
+
+    </nb-card-body>
+  </nb-card>
+<ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (userRowSelect)="onUserRowSelect($event)"></ng2-smart-table>
+

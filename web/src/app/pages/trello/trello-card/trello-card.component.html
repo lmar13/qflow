@@ -1,0 +1,16 @@
+<li class="card"
+    [attr.card-id]="card._id"
+    [attr.card-order]="card.order"
+    >
+    <div class="row">
+      <div class="col-8">
+          {{ card.title }}
+      </div>
+      <div class="col-2">
+          <ngx-edit-card [card]="card" [columns]="columns" [users]="users"></ngx-edit-card>
+      </div>
+      <div class="col-2">
+          <i class="nb-trash" (click)="deleteCard()"></i>
+      </div>
+    </div>
+</li>

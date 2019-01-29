@@ -1,0 +1,26 @@
+<div class="column" [attr.data-column-id]="column._id">
+    <div class="column-header">
+        <h4 [innerHtml]="column.title"></h4>
+    </div>
+    <div class="card-list" [sortablejs]="cards" [sortablejsOptions]="options" [attr.data-column-id]="column._id" style="height: 100%;">
+      <ng-container *ngIf="this.cards && !this.cards['info']">
+        <div *ngFor="let card of cards | where : { columnId: column._id } | orderBy: 'order'" [attr.data-card-id]="card._id">
+            <ngx-trello-card [card]="card"></ngx-trello-card>
+        </div>
+      </ng-container>
+
+    </div>
+        <!-- <div class="add-card"
+            (click)="enableAddCard()" >
+            <span [style.display]="addingCard ? 'none' : ''" >
+                Add a card...
+            </span>
+
+            <input
+            [style.display]="addingCard ? '' : 'none' "
+            [attr.autofocus]="addingCard"
+            (keyup)="addCardOnEnter($event)"
+            (blur)="addCardOnBlur()"
+            [(ngModel)]="addCardText" />
+        </div> -->
+</div>

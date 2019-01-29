@@ -1,0 +1,84 @@
+<h1 id="title" class="title">Change password</h1>
+<ng-container *ngIf="signedUp && !hasError">
+  <p class="sub-title">
+    Your account has been successfully activated.
+    <br><br>
+    You can now
+    <button
+      style="margin-left: 10px;"
+      nbButton
+      fullWidth
+      status="success"
+      (click)="goToLogin()">
+      Log In
+    </button>
+  </p>
+
+
+</ng-container>
+
+
+<ng-container *ngIf="!(signedUp && !hasError)">
+  <p class="sub-title">Your passowrd was succesfully reset. Provide new password.</p>
+
+  <nb-alert *ngIf="hasError" outline="danger" role="alert">
+    <p class="alert-title"><b>Oh snap!</b></p>
+    <ul class="alert-message-list">
+      <li class="alert-message">Unable to change password.</li>
+      <li class="alert-message">Password reset token can be invalid or has expired.</li>
+      <!-- <li *ngFor="let error of errors" class="alert-message">{{ error }}</li> -->
+    </ul>
+  </nb-alert>
+
+  <form [formGroup]="form">
+      <div class="form-control-group">
+        <label class="label" for="input-password">Password:</label>
+        <input nbInput
+              formControlName="pass"
+              type="password"
+              id="input-password"
+              name="pass"
+              placeholder="Password"
+              fullWidth
+              [status]="form.get('pass').dirty ? (form.get('pass').invalid  ? 'danger' : 'success') : ''"
+              required
+              [attr.aria-invalid]="form.get('pass').invalid && form.get('pass').dirty ? true : null">
+        <ng-container *ngIf="form.get('pass').invalid && form.get('pass').dirty">
+          <p class="error-message" *ngIf="form.get('pass').hasError('required')">
+            Password is required!
+          </p>
+          <p class="error-message" *ngIf="form.get('pass').hasError('minlength')">
+            Password should contains at least 4 characters
+          </p>
+        </ng-container>
+      </div>
+      <div class="form-control-group">
+        <label class="label" for="input-re-password">Repeat password:</label>
+        <input nbInput
+              formControlName="confirmPass"
+              type="password"
+              id="input-re-password"
+              name="confirmPass"
+              placeholder="Confirm Password"
+              fullWidth
+              [status]="form.get('confirmPass').dirty ? (form.hasError('notEquivalent') ? 'danger' : 'success') : ''"
+              required
+              [attr.aria-invalid]="form.get('confirmPass').invalid && form.get('confirmPass').dirty ? true : null">
+        <ng-container *ngIf="form.get('confirmPass').dirty">
+          <p class="error-message" *ngIf="form.get('confirmPass').hasError('required')">
+            Password confirmation is required!
+          </p>
+          <p class="error-message" *ngIf="form.hasError('notEquivalent')">
+            Password does not match the confirm password.
+          </p>
+        </ng-container>
+      </div>
+
+    <button nbButton
+            fullWidth
+            status="success"
+            (click)="changePass()">
+      Change password
+    </button>
+  </form>
+</ng-container>
