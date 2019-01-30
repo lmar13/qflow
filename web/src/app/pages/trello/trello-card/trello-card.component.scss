@@ -1,40 +1,59 @@
-.card {
-  background-color: #fff;
-  text-decoration: none;
-  padding: 7px;
-  margin: 0 0 8px;
-  border-radius: 3px;
-  color: #4d4d4d;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: normal;
-  font-stretch: normal;
-  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 18px;
-  cursor: move;
-  white-space: normal;
-  word-wrap: break-word;
-  list-style: none;
-  border-bottom: solid 1px #ccc;
-  transition: all;
-  transition-property: all;
-  transition-duration: 150ms;
-  transition-timing-function: ease;
 
-  span {
-    width: 70%;
-    display: inline-block;
+
+
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  .card {
+    background-color: nb-theme(cards-bg);
+    text-decoration: none;
+    padding: 7px;
+    margin: 0 0 8px;
+    border-radius: 3px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 18px;
+    cursor: move;
+    white-space: normal;
+    word-wrap: break-word;
+    list-style: none;
+    // border-bottom: solid 1px #ccc;
+    border: 1px solid nb-theme(cards-border);
+    transition: all;
+    transition-property: all;
+    transition-duration: 150ms;
+    transition-timing-function: ease;
+
+    span {
+      width: 70%;
+      display: inline-block;
+    }
+
+    i {
+      font-size: 28px;
+      // float: right;
+      cursor: pointer;
+    }
+
+    .col-3 {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .col-9 p {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+    }
   }
-}
 
-// .card:hover {
-//   background-color: #ddd;
-// }
+  // .card:hover {
+  //   background-color: #ddd;
+  // }
 
-i {
-  font-weight: bold;
-  font-size: 28px;
-  float: right;
-  cursor: pointer;
+
 }

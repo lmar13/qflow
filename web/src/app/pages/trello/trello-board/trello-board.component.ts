@@ -55,7 +55,7 @@ export class TrelloBoardComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(param => {
       this.board._id = param.boardId;
       this.socketService.join(param.boardId);
-      this.socketService.onRecconection().subscribe(() => {
+      this.socketService.onReconnection().subscribe(() => {
         this.socketService.join(param.boardId);
       });
     });

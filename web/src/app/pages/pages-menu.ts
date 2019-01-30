@@ -8,9 +8,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'Trello',
+    title: 'LeanKit',
     icon: 'nb-tables',
-    link: '/pages/trello',
+    link: '/pages/leankit',
   },
   {
     title: 'FEATURES',

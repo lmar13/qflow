@@ -15,7 +15,7 @@ const routes: Routes = [{
       component: DashboardComponent,
     },
     {
-      path: 'trello',
+      path: 'leankit',
       loadChildren: './trello/trello.module#TrelloModule',
       canLoad: [UserIsSignedInGuard]
     },

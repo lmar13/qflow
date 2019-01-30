@@ -18,7 +18,7 @@
     size="medium"
     [class.right]="position === 'normal'"
     [class.left]="position === 'inverse'">
-    <nb-action icon="nb-gear" class="toggle-layout" (click)="toggleSettings()"></nb-action>
+    <!-- <nb-action icon="nb-gear" class="" (click)="toggleSettings()"></nb-action> -->
     <nb-action *ngIf="isAuth">
       <nb-user
         [nbContextMenu]="userMenu"

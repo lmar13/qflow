@@ -104,7 +104,7 @@ export class TrelloListComponent implements OnInit {
 
   getRowData() {
     if(this.selectedRow){
-      this.router.navigate([`/pages/trello/board/${this.selectedRow._id}`]);
+      this.router.navigate([`../board/${this.selectedRow._id}`], { relativeTo: this.activeRoute });
     } else {
       alert('You need to choose project');
     }

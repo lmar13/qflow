@@ -22,7 +22,7 @@
       <strong>Error!</strong> Please choose project to see the board
   </nb-alert>
   <div class="row" *ngIf="board">
-    <div *ngFor="let column of columns" class="col-3">
+    <div *ngFor="let column of columns" class="col-md-3">
       <div class="column" [attr.data-column-id]="column._id">
         <div class="column-header">
             <h4 [innerHtml]="column.title"></h4>

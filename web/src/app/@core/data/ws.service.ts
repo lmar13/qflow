@@ -37,7 +37,7 @@ export class WebSocketService {
     this.socket.emit('leaveBoard', boardId);
   }
 
-  onRecconection(): Observable<any> {
+  onReconnection(): Observable<any> {
     return this.socket.fromEvent('reconnect');
   }
 

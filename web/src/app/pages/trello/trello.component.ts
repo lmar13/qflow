@@ -5,11 +5,11 @@ import { NbMenuItem } from '@nebular/theme';
 export const subMenu: NbMenuItem[] = [
   {
     title: 'All projects',
-    link: '/pages/trello',
+    link: '/pages/leankit',
   },
   {
     title: 'My projects',
-    link: '/pages/trello/user',
+    link: '/pages/leankit/user',
   },
 ];
 
@@ -19,7 +19,7 @@ export const subMenu: NbMenuItem[] = [
   template: `
     <div class="row">
       <nb-card style="width: 100%">
-        <nb-card-header>Trello</nb-card-header>
+        <nb-card-header>LeanKit</nb-card-header>
         <nb-card-body>
           <router-outlet></router-outlet>
         </nb-card-body>
