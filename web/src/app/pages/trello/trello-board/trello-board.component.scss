@@ -124,4 +124,12 @@
     width: calc(100% - 10px);
   }
 
+  nb-action {
+    cursor: pointer;
+  }
+
+  .disabled {
+    cursor: not-allowed;
+  }
+
 }

@@ -1,11 +1,10 @@
-import { UserService } from './../../../@core/data/users.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SortablejsOptions } from 'angular-sortablejs';
-import { Subscription } from 'rxjs';
 import { WebSocketService } from '../../../@core/data/ws.service';
 import { Board, Card, Column, User } from '../../../@core/model';
 import { TrelloCardService } from '../trello-card/trello-card.service';
+import { UserService } from './../../../@core/data/users.service';
 import { TrelloBoardService } from './trello-board.service';
 
 @Component({
@@ -20,7 +19,7 @@ export class TrelloBoardComponent implements OnInit, OnDestroy {
   cards = [] as Card[];
   users = [] as User[];
   moveCardData = null;
-  subscriptions: Subscription[] = [];
+  selectedCard: string;
 
   options: SortablejsOptions = {
     group: 'board',
@@ -48,7 +47,6 @@ export class TrelloBoardComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     console.log(`leaving board ${this.board._id}`);
     this.socketService.leave(this.board._id);
-    this.subscriptions.map(sub => sub.unsubscribe());
   }
 
   initConfig() {
@@ -79,8 +77,6 @@ export class TrelloBoardComponent implements OnInit, OnDestroy {
       this.cards = this.cards.filter(val => val._id !== card._id);
       this.columns = this.refreshDataInColumn();
     });
-
-    this.subscriptions.push(this.cardService.editCardState.subscribe(card => this.editCard(card)));
   }
 
   initFetchData() {
@@ -165,11 +161,20 @@ export class TrelloBoardComponent implements OnInit, OnDestroy {
       });
   }
 
-  deleteCard(card: Card) {
-    this.cardService.delete(card._id).subscribe(res => {
-      this.cards = this.cards.filter(val => val._id !== card._id);
-      this.columns = this.refreshDataInColumn();
-      this.socketService.deleteCard(this.board._id, card);
-    });
+  deleteCard() {
+    if(this.selectedCard) {
+      let card = this.cards.filter(card => card._id === this.selectedCard)[0];
+      this.cardService.delete(card._id).subscribe(res => {
+        this.cards = this.cards.filter(val => val._id !== card._id);
+        this.columns = this.refreshDataInColumn();
+        this.socketService.deleteCard(this.board._id, card);
+      });
+    } else {
+      alert('You need to choose card first');
+    }
+  }
+
+  selectCard(cardId) {
+    this.selectedCard = this.selectedCard !== cardId ? cardId : null;
   }
 }

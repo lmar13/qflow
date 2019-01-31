@@ -17,6 +17,9 @@ export class EditCardComponent implements OnDestroy {
   @Input() card: Card;
   @Input() users: User[];
   @Input() columns: Column[];
+  @Input() selected: string;
+
+  @Output() onEditCard = new EventEmitter<Card>()
 
 
   title = "Edit card";
@@ -54,6 +57,13 @@ export class EditCardComponent implements OnDestroy {
 
   private getDefaultData() {
     // this.columnService.getAll().subscribe(columns => this.columns = columns);
+    this.columns.map(col => col.cards.map(card => {
+      if(card._id === this.selected){
+        this.card = card;
+      }
+      return card;
+    }));
+
     // this.userService.getUsers().subscribe(users => {
       this.requestAutocompleteItems = this.users.map(user => ({
           value: user._id,
@@ -64,11 +74,14 @@ export class EditCardComponent implements OnDestroy {
   }
 
   open(dialog: TemplateRef<any>) {
-    this.dialogRef = this.dialogService.open(dialog, { closeOnBackdropClick : false, closeOnEsc: false });
-    this.getDefaultData();
-    console.log(this.card);
-    this.createForm();
-    setTimeout(() => this.form.controls['columnId'].setValue(this.card.columnId),0);
+    if (this.selected) {
+      this.dialogRef = this.dialogService.open(dialog, { closeOnBackdropClick : false, closeOnEsc: false });
+      this.getDefaultData();
+      this.createForm();
+      setTimeout(() => this.form.controls['columnId'].setValue(this.card.columnId),0);
+    } else {
+      alert('You need to choose card first');
+    }
   }
 
   submit() {
@@ -89,10 +102,10 @@ export class EditCardComponent implements OnDestroy {
 
     // console.log(formData);
 
-    // this.onEditCard.emit(formData);
+    this.onEditCard.emit(formData);
     // this.dialogRef.close();
 
-    this.cardService.changeEditState(formData);
+    // this.cardService.changeEditState(formData);
     this.dialogRef.close();
   }
 

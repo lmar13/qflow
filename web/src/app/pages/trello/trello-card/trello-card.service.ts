@@ -12,9 +12,6 @@ import { catchError, map } from 'rxjs/operators';
 export class TrelloCardService {
   private baseUrl: string;
 
-  private editCardStateSource = new Subject<Card>();
-  editCardState = this.editCardStateSource.asObservable();
-
   constructor(
     private httpClient: HttpClient,
     envProvider: EnvironmentProviderService) {
@@ -74,9 +71,5 @@ export class TrelloCardService {
         }),
         map(value => value as Card)
       );
-  }
-
-  changeEditState(card: Card) {
-    this.editCardStateSource.next(card);
   }
 }

@@ -4,6 +4,11 @@
 @import '../../../@theme/styles/themes';
 
 @include nb-install-component() {
+
+  .card.selected {
+    background-color: nb-theme(cards-selected);
+  }
+
   .card {
     background-color: nb-theme(cards-bg);
     text-decoration: none;
