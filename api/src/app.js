@@ -6,11 +6,13 @@ var express = require('express')
     , router = express.Router()
     , log = require('./dev-logger.js')
     , cors = require('cors')
-    , session = require('express-session');
+    , session = require('express-session')
+    , backup = require('mongodb-backup')
+    , restore = require('mongodb-restore');
     // , errorHandler = require('errorhandler');
 
 var corsOption = {
-  origin: 'http://localhost:4200',
+  origin: process.env.CLIENT_URL || 'http://localhost:4200',
   credentials: true,
 }
 
@@ -18,11 +20,11 @@ app.use(cors(corsOption));
 
 var server = require('http').createServer(app);
 
-var ws = require('./ws.js')(server, true);
+// var ws = require('./ws.js')(server, true);
 
 app.use(express.static(__dirname + '/dist')); // set the static files location for the static html
 // app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
-// You can set morgan to log differently depending on your environment
+
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('common', { skip: function(req, res) { return res.statusCode < 400 }, stream: __dirname + '/../morgan.log' }));
 } else {
@@ -41,7 +43,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
   })
-)
+);
 
 router.get('/', function(req, res, next) {
     res.sendFile(__dirname + '/dist/index.html');
@@ -49,24 +51,52 @@ router.get('/', function(req, res, next) {
 
 app.use('/', router);
 
-var mongoUri = process.env.MONGO_URI || 'mongodb://localhost/gtm';
+var mongoUri = process.env.MONGO_URI || 'mongodb://localhost/qflow';
+// mongodb://root:example@10.218.75.164:9028/qflow
+const backupUrl = process.env.MONGO_BACKUP_PATH || __dirname + '\\mongo-backup';
 
 console.log(mongoUri);
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect(mongoUri, { useNewUrlParser: true }).then(function (db){
-  // Provisional code, for runing db.dropDatabase() every sunday
-    // if (new Date().getDay() == 0) {
-    //   mongoose.connection.db.dropDatabase(function (){
-    //     log('db droped');
-    //   });
-    // }
+  mongoose.connection.db.listCollections({name: 'users'}).next(function(err, collinfo) {
+    if(!collinfo) {
+      // restore({
+      //   uri: mongoUri,
+      //   root: backupUrl,
+      //   // metadata: true,
+      //   tar: 'dump.tar',
+      //   callback: function(err) {
+      //     if(err) {
+      //       console.log(err);
+      //     } else {
+      //       console.log(`Database has been successfully restored. Path: ${backupUrl}`);
+      //     }
+      //   },
+      // });
+    } else {
+      backup({
+        uri: mongoUri,
+        root: backupUrl,
+        // metadata: true,
+        tar: 'dump.tar',
+        callback: function(err) {
+          if(err) {
+            console.log(err);
+          } else {
+            console.log(`Database has been successfully backed up. Path: ${backupUrl}`);
+          }
+        },
+      });
+    }
+  })
 }).catch(function(err){
     log('Unabled to connect to mongodb err:', err);
     log('Check if MongoDB Server is running and available.');
 });
 mongoose.set('useCreateIndex', true);
 
+var ws = require('./ws.js')(server, true);
 var cardRoutes = require('./routes/card.routes.js')(app);
 var columnRoutes = require('./routes/column.routes.js')(app);
 var boardRoutes = require('./routes/board.routes.js')(app);

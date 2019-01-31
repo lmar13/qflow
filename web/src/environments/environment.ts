@@ -5,11 +5,6 @@
 export const environment = {
   production: false,
   appToken: 'Lm2Bj4Z*Fy6U$2u?',
-  // apiBaseUri: 'https://test-server-json.herokuapp.com'
-  // apiBaseUri: 'http://localhost:8080'
-  // apiBaseUri: 'http://localhost:8080/rap'
-  // apiBaseUri: 'http://10.7.102.189:8080/rap/api'
-  // apiBaseUri: 'http://localhost:8080/rap/api'
   apiBaseUri: 'http://localhost:3000'
 };
 
