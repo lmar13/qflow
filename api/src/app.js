@@ -36,7 +36,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(session({
-    secret: 'qflow',
+    secret: process.env.SECRET_KEY || 'qflow',
     cookie: {
       maxAge: 60000
     },
