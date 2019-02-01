@@ -5,7 +5,7 @@ const {
 
 module.exports = function log() {
   if (consoleLoggerOn || nodeEnv !== 'production') {
-    for (var o in arguments) {
+    for (let o in arguments) {
       console.log(arguments[o]);
     }
   }

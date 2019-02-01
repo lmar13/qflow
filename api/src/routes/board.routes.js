@@ -1,17 +1,17 @@
 'use strict';
 
-var Board = require('../models/board.js');
-var Card = require('../models/card.js');
-var log = require('./../dev-logger.js');
-var auth = require('./../auth-config/auth');
+const Board = require('../models/board.js');
+const Card = require('../models/card.js');
+const log = require('./../dev-logger.js');
+const auth = require('./../auth-config/auth');
 
 module.exports = function (app) {
   log('starting board routes');
   /* Create */
   app.post('/board', auth.required, (req, res) => {
     log('POST /board', req.body);
-    var newBoard = new Board(req.body);
-    newBoard.save().then((err, newBoard) => err ? res.json({
+    const newBoard = new Board(req.body);
+    newBoard.save((err, newBoard) => err ? res.json({
       info: 'error during board create',
       error: err
     }) : res.json(newBoard));

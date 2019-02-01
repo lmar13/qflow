@@ -1,5 +1,5 @@
-var _ = require('lodash');
-var User = require('../models/user.js');
+const _ = require('lodash');
+const User = require('../models/user.js');
 const auth = require('./../auth-config/auth');
 
 module.exports = function (app) {
@@ -23,7 +23,7 @@ module.exports = function (app) {
       if (user) {
         _.merge(user, req.body);
 
-        user.save().then((err, user) => err ? res.status(404).json({
+        user.save((err, user) => err ? res.status(404).json({
           errors: 'Error when saving user'
         }) : res.status(200).json(user));
       }

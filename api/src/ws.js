@@ -1,10 +1,10 @@
 'use strict';
 
-var log = require('./dev-logger.js');
+const log = require('./dev-logger.js');
 
 module.exports = function (server, origins) {
   log('Running socket.io server');
-  var io = require('socket.io').listen(server);
+  const io = require('socket.io').listen(server);
 
   if (origins) {
     io.set('origins', '*:*');

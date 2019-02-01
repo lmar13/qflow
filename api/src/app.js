@@ -18,16 +18,16 @@ const {
 } = require('./config');
 // , errorHandler = require('errorhandler');
 
-var corsOption = {
+const corsOption = {
   origin: clientUrl || 'http://localhost:4200',
   credentials: true,
 };
 
 app.use(cors(corsOption));
 
-var server = require('http').createServer(app);
+const server = require('http').createServer(app);
 
-// var ws = require('./ws.js')(server, true);
+// const ws = require('./ws.js')(server, true);
 
 app.use(express.static(__dirname + '/dist')); // set the static files location for the static html
 // app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
@@ -72,7 +72,7 @@ app.get('/test', (req, res) => {
 const backupUrl = mongoBackupPath || __dirname + '\\mongo-backup';
 
 console.log(mongoUri);
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect(mongoUri, {
   useNewUrlParser: true
@@ -104,12 +104,12 @@ mongoose.connect(mongoUri, {
 });
 mongoose.set('useCreateIndex', true);
 
-var ws = require('./ws.js')(server, true);
-var cardRoutes = require('./routes/card.routes.js')(app);
-var columnRoutes = require('./routes/column.routes.js')(app);
-var boardRoutes = require('./routes/board.routes.js')(app);
-var userRoutes = require('./routes/user.routes.js')(app);
-var authRoutes = require('./routes/auth.routes.js')(app);
-var passport = require('./auth-config/passport.js');
+const ws = require('./ws.js')(server, true);
+const cardRoutes = require('./routes/card.routes.js')(app);
+const columnRoutes = require('./routes/column.routes.js')(app);
+const boardRoutes = require('./routes/board.routes.js')(app);
+const userRoutes = require('./routes/user.routes.js')(app);
+const authRoutes = require('./routes/auth.routes.js')(app);
+const passport = require('./auth-config/passport.js');
 
 server.listen(serverPort, () => log('App running on port', serverPort));

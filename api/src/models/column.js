@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-var columnSchema = mongoose.Schema({
+const columnSchema = mongoose.Schema({
   title: String,
 });
 

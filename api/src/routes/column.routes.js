@@ -1,8 +1,8 @@
-var _ = require('lodash');
-var Column = require('../models/column.js');
-var Card = require('../models/card.js');
-var log = require('./../dev-logger.js');
-var auth = require('./../auth-config/auth');
+const _ = require('lodash');
+const Column = require('../models/column.js');
+const Card = require('../models/card.js');
+const log = require('./../dev-logger.js');
+const auth = require('./../auth-config/auth');
 
 module.exports = function (app) {
   log('starting column routes');

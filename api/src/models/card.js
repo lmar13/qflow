@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-var cardSchema = mongoose.Schema({
+const cardSchema = mongoose.Schema({
   title: String,
   content: String,
   columnId: String,

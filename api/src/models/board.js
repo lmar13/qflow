@@ -1,10 +1,10 @@
 'use strict';
 
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 console.log('initializing Schema');
-var boardSchema = mongoose.Schema({
+const boardSchema = mongoose.Schema({
   title: String,
   owner: {
     _id: String,

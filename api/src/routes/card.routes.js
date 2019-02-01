@@ -1,15 +1,15 @@
-var _ = require('lodash');
-var Card = require('../models/card.js');
-var log = require('./../dev-logger.js');
-var auth = require('./../auth-config/auth');
+const _ = require('lodash');
+const Card = require('../models/card.js');
+const log = require('./../dev-logger.js');
+const auth = require('./../auth-config/auth');
 
 module.exports = function (app) {
   log('starting card routes');
   /* Create */
   app.post('/card', auth.required, (req, res) => {
     log('POST /card');
-    var newCard = new Card(req.body);
-    newCard.save().then((err, newCard) => err ? res.json({
+    const newCard = new Card(req.body);
+    newCard.save((err, newCard) => err ? res.json({
       info: 'error during card create',
       error: err
     }) : res.status(200).json(newCard));
