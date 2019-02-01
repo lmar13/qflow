@@ -2,17 +2,17 @@ var express = require('express')
     , morgan = require('morgan')
     , bodyParser = require('body-parser')
     , app = express()
-    , port = process.env.PORT || 3000
     , router = express.Router()
     , log = require('./dev-logger.js')
     , cors = require('cors')
     , session = require('express-session')
     , backup = require('mongodb-backup')
-    , restore = require('mongodb-restore');
+    , restore = require('mongodb-restore')
+    , { nodeEnv, port, clientUrl, secretKey, mongoUri, mongoBackupPath } = require('./config');
     // , errorHandler = require('errorhandler');
 
 var corsOption = {
-  origin: process.env.CLIENT_URL || 'http://localhost:4200',
+  origin: clientUrl || 'http://localhost:4200',
   credentials: true,
 }
 
@@ -25,7 +25,7 @@ var server = require('http').createServer(app);
 app.use(express.static(__dirname + '/dist')); // set the static files location for the static html
 // app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
 
-if (process.env.NODE_ENV === 'production') {
+if (nodeEnv === 'production') {
   app.use(morgan('common', { skip: function(req, res) { return res.statusCode < 400 }, stream: __dirname + '/../morgan.log' }));
 } else {
   app.use(morgan('dev', {skip: function(req, res) { return res.statusCode < 400 }}));
@@ -36,7 +36,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(session({
-    secret: process.env.SECRET_KEY || 'qflow',
+    secret: secretKey || 'qflow',
     cookie: {
       maxAge: 60000
     },
@@ -51,9 +51,9 @@ router.get('/', function(req, res, next) {
 
 app.use('/', router);
 
-var mongoUri = process.env.MONGO_URI || 'mongodb://localhost/qflow';
+mongoUri = mongoUri || 'mongodb://localhost/qflow';
 // mongodb://root:example@10.218.75.164:9028/qflow
-const backupUrl = process.env.MONGO_BACKUP_PATH || __dirname + '\\mongo-backup';
+const backupUrl = mongoBackupPath || __dirname + '\\mongo-backup';
 
 console.log(mongoUri);
 var mongoose = require('mongoose');
