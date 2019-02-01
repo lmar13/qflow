@@ -29,11 +29,15 @@
     "nodemailer": "^5.1.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "prettier": "^1.16.3",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
-    "eslint": "^5.12.1",
-    "eslint-config-strongloop": "^2.1.0",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "nodemon": "^1.18.9",
     "rimraf": "2.6.1"
   },
