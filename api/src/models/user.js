@@ -14,7 +14,10 @@ const userSchema = mongoose.Schema({
   salt: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date,
-  isVerified: { type: Boolean, default: false },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
 });
 
 userSchema.methods.setPassword = function (password) {
@@ -40,8 +43,8 @@ userSchema.methods.generateJWT = function () {
     empId: this.empId,
     role: this.role,
     exp: parseInt(expirationDate.getTime() / 1000, 10),
-    }, 'secret');
-}
+  }, 'secret');
+};
 
 userSchema.methods.toAuthJSON = function () {
   return {

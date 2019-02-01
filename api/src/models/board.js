@@ -1,20 +1,22 @@
+'use strict';
+
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-console.log('inializing Schema');
+console.log('initializing Schema');
 var boardSchema = mongoose.Schema({
-    title: String,
-    owner: {
-      _id: String,
-      email: String,
-    },
-    startDate: Date,
-    endDate: Date,
-    assignedUsers: [{
-      value: String,
-      display: String,
-      readonly: Boolean,
-    }]
+  title: String,
+  owner: {
+    _id: String,
+    email: String,
+  },
+  startDate: Date,
+  endDate: Date,
+  assignedUsers: [{
+    value: String,
+    display: String,
+    readonly: Boolean,
+  }],
 });
 
 console.log('exporting Schema');

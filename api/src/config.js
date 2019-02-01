@@ -11,4 +11,4 @@ module.exports = {
     mongoPassword: process.env.MONGO_PASSWORD,
     clientUrl: process.env.CLIENT_URL,
     consoleLoggerOn: process.env.LOG_ON,
-}
+};

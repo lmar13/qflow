@@ -18,7 +18,7 @@ module.exports = function (app) {
   });
 
   /* Read */
-  app.get('/boards', auth.required, function (req, res) {
+  app.get('/boards', auth.required, (req, res) => {
     log('GET /board');
     Board.find((err, boards) => err ? res.json({
       info: 'error during find boards',
@@ -26,7 +26,7 @@ module.exports = function (app) {
     }) : res.json(boards));
   });
 
-  app.get('/boardsForUser/:id', auth.required, function (req, res) {
+  app.get('/boardsForUser/:id', auth.required, (req, res) => {
     log('GET /boardsForUser/:id', req.params.id);
     Board.find({
       'assignedUsers.value': req.params.id
@@ -40,7 +40,7 @@ module.exports = function (app) {
     ));
   });
 
-  app.get('/board/:id', auth.required, function (req, res) {
+  app.get('/board/:id', auth.required, (req, res) => {
     log('GET /board/:id', req.params.id);
     Board.findById(req.params.id, (err, board)(
       err ? res.json({
