@@ -6,16 +6,19 @@ const router = express.Router();
 const log = require('./dev-logger.js');
 const cors = require('cors');
 const session = require('express-session');
-const backup = require('mongodb-backup');
-const restore = require('mongodb-restore');
+// const backup = require('mongodb-backup');
+// const restore = require('mongodb-restore');
 const {
   nodeEnv,
   serverPort,
   clientUrl,
   secretKey,
   mongoUri,
-  mongoBackupPath
 } = require('./../config/env.config');
+const {
+  backup,
+  restore
+} = require('./../config/db.config');
 // , errorHandler = require('errorhandler');
 
 const corsOption = {
@@ -69,7 +72,6 @@ app.get('/test', (req, res) => {
 
 // mongoUri = mongoUri || 'mongodb://localhost/qflow';
 // mongodb://root:example@10.218.75.164:9028/qflow
-const backupUrl = mongoBackupPath || __dirname + '\\mongo-backup';
 
 console.log(mongoUri);
 const mongoose = require('mongoose');
@@ -81,22 +83,9 @@ mongoose.connect(mongoUri, {
     name: 'users'
   }).next((err, collinfo) => {
     if (!collinfo) {
-      restore({
-        uri: mongoUri,
-        root: backupUrl,
-        // metadata: true,
-        tar: 'dump.tar',
-        callback: (err) => err ? log(err) : log(`Database has been successfully restored. Path: ${backupUrl}`),
-      });
-    } else {
-      backup({
-        uri: mongoUri,
-        root: backupUrl,
-        // metadata: true,
-        tar: 'dump.tar',
-        callback: (err) => err ? log(err) : log(`Database has been successfully backed up. Path: ${backupUrl}`),
-      });
+      restore()
     }
+    backup()
   });
 }).catch((err) => {
   log('Unabled to connect to mongodb err:', err);
