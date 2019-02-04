@@ -15,7 +15,7 @@ const {
   secretKey,
   mongoUri,
   mongoBackupPath
-} = require('./config');
+} = require('./../config/env.config');
 // , errorHandler = require('errorhandler');
 
 const corsOption = {

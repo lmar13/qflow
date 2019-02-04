@@ -1,7 +1,7 @@
 const {
   consoleLoggerOn,
   nodeEnv
-} = require('./config');
+} = require('./../config/env.config');
 
 module.exports = function log() {
   if (consoleLoggerOn || nodeEnv !== 'production') {
