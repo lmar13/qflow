@@ -9,7 +9,7 @@ const {
 } = require('./env.config');
 
 const backupUrl = mongoBackupPath || __dirname + '\\mongo-backup';
-const cron = backupInterval || '0 0 15 * * *'; // it will execute at 15:00:00 every day
+const cron = backupInterval || '0 0 15 * * *'; // it will execute at 15:00:00 every day (crontab parser)
 
 module.exports = {
     backup: () => {
