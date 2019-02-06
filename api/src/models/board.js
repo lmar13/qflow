@@ -12,6 +12,8 @@ const boardSchema = mongoose.Schema({
   },
   startDate: Date,
   endDate: Date,
+  planDate: Date,
+  dueDate: Date,
   assignedUsers: [{
     value: String,
     display: String,

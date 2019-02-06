@@ -7,6 +7,16 @@ const auth = require('./../auth-config/auth');
 module.exports = function (app) {
   log('starting column routes');
 
+  /* Create */
+  app.post('/column', auth.required, (req, res) => {
+    log('POST /column');
+    const newCard = new Column(req.body);
+    newColumn.save((err, newColumn) => err ? res.json({
+      info: 'error during column create',
+      error: err
+    }) : res.status(200).json(newColumn));
+  });
+
   /* Read */
   app.get('/column', auth.required, (req, res) => {
     log('GET /column');
@@ -26,6 +36,26 @@ module.exports = function (app) {
         info: 'column not found'
       })
     ));
+  });
+
+  /* Update */
+  app.put('/column/:id', auth.required, (req, res) => {
+    log('PUT /column/:id');
+    Column.replaceOne({
+      _id: req.params.id
+    }, req.body, (err) => err ? res.status(404).json({
+      info: 'error during card update',
+      error: err
+    }) : res.status(200).json(req.body));
+  });
+
+  /* Delete */
+  app.delete('/column/:id', auth.required, (req, res) => {
+    log('DELETE /column/:id');
+    Column.findByIdAndRemove(req.params.id, (err) => err ? res.json({
+      info: 'error during remove card',
+      error: err
+    }) : res.status(200).json(req.body.column));
   });
 
   // Read card for specific board and sign it to correct columns

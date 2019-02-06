@@ -42,7 +42,7 @@ module.exports = function (app) {
 
   app.get('/board/:id', auth.required, (req, res) => {
     log('GET /board/:id', req.params.id);
-    Board.findById(req.params.id, (err, board)(
+    Board.findById(req.params.id, (err, board) => (
       err ? res.json({
         info: 'error during find board',
         error: err

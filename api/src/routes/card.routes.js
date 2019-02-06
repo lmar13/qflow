@@ -18,10 +18,14 @@ module.exports = function (app) {
   /* Read */
   app.get('/card', auth.required, (req, res) => {
     log('GET /card');
-    Card.find((err, cards) => err ? res.json({
+    Card.find({
+      __t: {
+        $ne: "subcard"
+      }
+    }, (err, cards) => err ? res.json({
       info: 'error during find cards',
       error: err
-    }) : res.status.json(cards));
+    }) : res.status(200).json(cards));
   });
 
   app.get('/card/:id', auth.required, (req, res) => {
@@ -51,7 +55,10 @@ module.exports = function (app) {
     log('PUT /cardAll');
     // console.log(req.body);
     Card.find({
-      boardId: req.body.boardId
+      boardId: req.body.boardId,
+      __t: {
+        $ne: "subcard"
+      }
     }, (error, cards) => {
       if (error) {
         res.status(404).json({

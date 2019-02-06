@@ -9,7 +9,7 @@ module.exports = {
     mongoBackupPath: process.env.MONGO_BACKUP_PATH,
     mongoUsername: process.env.MONGO_USERNAME,
     mongoPassword: process.env.MONGO_PASSWORD,
-    clientUrl: process.env.CLIENT_URL,
+    clientUrl: process.env.CLIENT_URL.split(' '),
     consoleLoggerOn: process.env.LOG_ON,
     backupInterval: process.env.BACKUP_INTERVAL,
 };
