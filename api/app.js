@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
 const router = express.Router();
-const log = require('./dev-logger.js');
+const log = require('./src/dev-logger.js');
 const cors = require('cors');
 const session = require('express-session');
 // const backup = require('mongodb-backup');
@@ -14,11 +14,11 @@ const {
   clientUrl,
   secretKey,
   mongoUri,
-} = require('./../config/env.config');
+} = require('./config/env.config');
 const {
   backup,
   restore
-} = require('./../config/db.config');
+} = require('./config/db.config');
 // , errorHandler = require('errorhandler');
 
 const corsOption = {
@@ -59,10 +59,6 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-router.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'));
-
-app.use('/', router);
-
 app.get('/test', (req, res) => {
   log('GET /test');
   res.status(200).json({
@@ -70,10 +66,6 @@ app.get('/test', (req, res) => {
   });
 });
 
-// mongoUri = mongoUri || 'mongodb://localhost/qflow';
-// mongodb://root:example@10.218.75.164:9028/qflow
-
-console.log(mongoUri);
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect(mongoUri, {
@@ -93,12 +85,17 @@ mongoose.connect(mongoUri, {
 });
 mongoose.set('useCreateIndex', true);
 
-const ws = require('./ws.js')(server, true);
-const cardRoutes = require('./routes/card.routes.js')(app);
-const columnRoutes = require('./routes/column.routes.js')(app);
-const boardRoutes = require('./routes/board.routes.js')(app);
-const userRoutes = require('./routes/user.routes.js')(app);
-const authRoutes = require('./routes/auth.routes.js')(app);
-const passport = require('./auth-config/passport.js');
+const ws = require('./src/ws.js')(server, true);
+const cardRoutes = require('./src/routes/card.routes.js')(app);
+const subcardRoutes = require('./src/routes/subcard.routes.js')(app);
+const columnRoutes = require('./src/routes/column.routes.js')(app);
+const boardRoutes = require('./src/routes/board.routes.js')(app);
+const userRoutes = require('./src/routes/user.routes.js')(app);
+const authRoutes = require('./src/routes/auth.routes.js')(app);
+const passport = require('./src/auth-config/passport.js');
+
+router.get('/*', (req, res) => res.sendFile(__dirname + '/dist/index.html'));
+
+app.use('/', router);
 
 server.listen(serverPort, () => log('App running on port', serverPort));

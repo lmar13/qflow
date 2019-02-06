@@ -2,7 +2,7 @@
   "name": "api-qflow",
   "version": "1.0.0",
   "scripts": {
-    "start": "nodemon src/app.js --exec babel-node",
+    "start": "nodemon app.js --exec babel-node",
     "serve": "node build/app.js",
     "clean": "rimraf build",
     "prebuild": "npm run clean",
