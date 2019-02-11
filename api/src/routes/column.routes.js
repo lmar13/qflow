@@ -10,11 +10,22 @@ module.exports = function (app) {
   /* Create */
   app.post('/column', auth.required, (req, res) => {
     log('POST /column');
-    const newCard = new Column(req.body);
+    const newColumn = new Column(req.body);
     newColumn.save((err, newColumn) => err ? res.json({
       info: 'error during column create',
       error: err
     }) : res.status(200).json(newColumn));
+  });
+
+  app.post('/columns', auth.required, (req, res) => {
+    log('POST /columns');
+    Column
+      .insertMany(req.body)
+      .then(() => res.status(200).json(req.body))
+      .catch(err => res.status(500).json({
+        info: 'Something went wrong',
+        err
+      }));
   });
 
   /* Read */
@@ -36,6 +47,16 @@ module.exports = function (app) {
         info: 'column not found'
       })
     ));
+  });
+
+  app.get('/columnForBoard/:id', auth.required, (req, res) => {
+    log('GET /columnForBoard/:id');
+    Column.find({
+      boardId: req.params.id
+    }, (err, columns) => err ? res.json({
+      info: 'error during find columns',
+      error: err
+    }) : res.json(columns));
   });
 
   /* Update */
