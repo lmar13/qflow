@@ -16,8 +16,8 @@ module.exports = function (app) {
     });
 
     /* Read */
-    app.get('/subcard', auth.required, (req, res) => {
-        log('GET /subcard');
+    app.get('/subcards', auth.required, (req, res) => {
+        log('GET /subcards');
         Subcard.find((err, subcards) => err ? res.json({
             info: 'error during find cards',
             error: err
@@ -61,7 +61,9 @@ module.exports = function (app) {
             }
             if (subcards) {
                 // log(req.body.cards);
-                _.merge(cards, req.body.subcards);
+                _.merge(subcards, req.body.subcards);
+
+                log(subcards);
 
                 Subcard.bulkWrite(subcards.map(subcard => ({
                     replaceOne: {

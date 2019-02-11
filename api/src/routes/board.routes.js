@@ -1,7 +1,9 @@
 'use strict';
 
 const Board = require('../models/board.js');
+const Column = require('../models/column.js')
 const Card = require('../models/card.js');
+const Subcard = require('../models/subcards.js');
 const log = require('./../dev-logger.js');
 const auth = require('./../auth-config/auth');
 
@@ -60,7 +62,35 @@ module.exports = function (app) {
         error: err
       }) : board ? Card
       .find({
-        boardId: req.params.id
+        boardId: req.params.id,
+        __t: {
+          $ne: "subcard"
+        }
+      })
+      .sort({
+        order: 1
+      })
+      .exec((err, cards) => err ? res.status(400).json({
+        info: 'error during find cards',
+      }) : res.json(cards)) :
+      res.json({
+        info: 'board not found'
+      })
+    ));
+  });
+
+  app.get('/board/:boardId/card/:cardId/subcards', auth.required, (req, res) => {
+    log('GET /board/:boardId/card/:cardId/subcards');
+    log('boardId: ', req.params.boardId);
+    log('cardId: ', req.params.cardId);
+    Board.findById(req.params.boardId, (err, board) => (
+      err ? res.json({
+        info: 'error during find board',
+        error: err
+      }) : board ? Subcard
+      .find({
+        boardId: req.params.boardId,
+        cardId: req.params.cardId
       })
       .sort({
         order: 1
@@ -91,8 +121,18 @@ module.exports = function (app) {
     Board.findByIdAndRemove(req.params.id, (err) => err ? res.json({
       info: 'error during remove board',
       error: err
-    }) : res.json({
+    }) : Column.deleteMany({
+      boardId: req.params.id
+    }, (err) => err ? res.json({
+      info: 'error during remove columns',
+      error: err
+    }) : Card.deleteMany({
+      boardId: req.params.id
+    }, (err) => err ? res.json({
+      info: 'error during remove cards',
+      error: err
+    }) : res.status(200).json({
       info: 'board removed successfully'
-    }));
+    }))))
   });
 };
