@@ -18,7 +18,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: "Task Register",
-    icon: "nb-title"
+    icon: "nb-title",
+    link: "/pages/tr"
   },
   {
     title: "Project Manager",
@@ -30,11 +31,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: "All projects",
-        link: "/pages/leankit"
+        link: "/pages/pm"
       },
       {
         title: "My projects",
-        link: "/pages/leankit/user"
+        link: "/pages/pm/user"
       }
     ]
   },

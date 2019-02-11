@@ -1,0 +1,41 @@
+<nb-card>
+  <nb-card-body>
+
+    <nb-actions size="small" style="width: 100%;">
+      <nb-action style="cursor: none;">Project: {{board.title}}</nb-action>
+      <nb-action>
+        <ngx-add-card [boardId]="board._id" [columns]="columns" [users]="users" (onAddCard)="addCard($event)"></ngx-add-card>
+      </nb-action>
+      <nb-action [class.disabled]="!selectedCard" [disabled]="!selectedCard">
+        <ngx-edit-card [users]="users" [columns]="columns" [selected]="selectedCard" (onEditCard)="editCard($event)">
+        </ngx-edit-card>
+      </nb-action>
+      <nb-action [class.disabled]="!selectedCard" [disabled]="!selectedCard">
+        <span (click)="deleteCard()">Delete card</span>
+      </nb-action>
+      <nb-action icon="nb-gear" disabled></nb-action>
+    </nb-actions>
+
+  </nb-card-body>
+</nb-card>
+
+<div class="container-fluid">
+  <nb-alert outline="danger" *ngIf="(this.cards && this.cards['info']) || (!board._id || board._id === 'init')">
+    <strong>Error!</strong> Please choose project to see the board
+  </nb-alert>
+  <div class="row" *ngIf="board">
+    <div *ngFor="let column of columns" class="col">
+      <div class="column" [attr.data-column-id]="column._id">
+        <div class="column-header">
+          <h4 [innerHtml]="column.title"></h4>
+        </div>
+        <div [sortablejs]="column.cards" [sortablejsOptions]="options" [attr.data-column-id]="column._id" class="card-list"
+          style="height: 100%;" (drop)="moveCard(column.cards)">
+          <div *ngFor="let card of column.cards" [attr.data-card-id]="card._id" (click)="selectCard(card._id)">
+            <ngx-card [card]="card" [columns]="columns" [users]="users" (onDeleteCard)="deleteCard($event)" [selected]="card._id === selectedCard"></ngx-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

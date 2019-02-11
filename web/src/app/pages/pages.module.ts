@@ -1,25 +1,20 @@
-import { NgModule } from '@angular/core';
-import { ThemeModule } from '../@theme/theme.module';
-import { DashboardModule } from './dashboard/dashboard.module';
-import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
-import { PagesRoutingModule } from './pages-routing.module';
-import { PagesComponent } from './pages.component';
+import { NgModule } from "@angular/core";
+import { ThemeModule } from "../@theme/theme.module";
+import { DashboardModule } from "./dashboard/dashboard.module";
+import { MiscellaneousModule } from "./miscellaneous/miscellaneous.module";
+import { PagesRoutingModule } from "./pages-routing.module";
+import { PagesComponent } from "./pages.component";
+import { TaskRegisterComponent } from "./task-register/task-register.component";
 
-
-const PAGES_COMPONENTS = [
-  PagesComponent,
-];
+const PAGES_COMPONENTS = [PagesComponent, TaskRegisterComponent];
 
 @NgModule({
   imports: [
     PagesRoutingModule,
     ThemeModule,
     DashboardModule,
-    MiscellaneousModule,
+    MiscellaneousModule
   ],
-  declarations: [
-    ...PAGES_COMPONENTS,
-  ],
+  declarations: [...PAGES_COMPONENTS]
 })
-export class PagesModule {
-}
+export class PagesModule {}
