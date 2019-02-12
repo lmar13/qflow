@@ -19,6 +19,7 @@ import { ListComponent } from "./list/list.component";
 import { PMRoutingModule } from "./pm-routing.module";
 import { PMComponent } from "./pm.component";
 import { SubboardComponent } from "./subboard/subboard.component";
+import { CardFilterComponent } from './cards/card-filter/card-filter.component';
 
 const PM_COMPONENTS = [
   PMComponent,
@@ -49,7 +50,7 @@ const PM_COMPONENTS = [
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [...PM_COMPONENTS],
+  declarations: [...PM_COMPONENTS, CardFilterComponent],
   providers: [
     // SmartTableService,
     // WebSocketService,

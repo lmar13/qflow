@@ -1,0 +1,21 @@
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      {{ title }}
+      <i class="nb-close" (click)="ref.close()"></i>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="form-group">
+        <label for="title">Users</label>
+        <nb-select multiple placeholder="Multiple Select" outline status="primary" shape="semi-round" [(ngModel)]="selectedUsers"
+          (selectedChange)="setUsers($event)">
+          <nb-option *ngFor="let user of users" [value]="user._id">{{ user.email }}</nb-option>
+        </nb-select>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton (click)="submit()">Apply filters</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<span (click)="open(dialog)">{{ title }}</span>

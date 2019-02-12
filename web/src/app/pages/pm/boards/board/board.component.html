@@ -13,7 +13,9 @@
       <nb-action [class.disabled]="!selectedCard" [disabled]="!selectedCard">
         <span (click)="deleteCard()">Delete card</span>
       </nb-action>
-      <nb-action icon="nb-gear" disabled></nb-action>
+      <nb-action>
+        <ngx-card-filter (filterSet)="applyFilters($event)"></ngx-card-filter>
+      </nb-action>
     </nb-actions>
 
   </nb-card-body>

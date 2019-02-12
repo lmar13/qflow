@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { SortablejsOptions } from "angular-sortablejs";
 import { WebSocketService } from "../../../../@core/data/ws.service";
 import { BoardService } from "../../../../@core/data/board.service";
-import { Board, Column, Card, User } from "../../../../@core/model";
+import { Board, Column, Card, User, CardFilter } from "../../../../@core/model";
 import { CardService } from "../../../../@core/data/card.service";
 import { UserService } from "../../../../@core/data/users.service";
 
@@ -16,9 +16,11 @@ export class BoardComponent implements OnInit, OnDestroy {
   board = {} as Board;
   columns = [] as Column[];
   cards = [] as Card[];
+  notFilteredCards = [] as Card[];
   users = [] as User[];
   moveCardData = null;
   selectedCard: string;
+  filterOption: any;
 
   options: SortablejsOptions = {
     group: "board",
@@ -48,6 +50,10 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.socketService.leave(this.board._id);
   }
 
+  writeToConsole() {
+    console.log(this.filterOption);
+  }
+
   initConfig() {
     this.route.params.subscribe(param => {
       this.board._id = param.boardId;
@@ -59,22 +65,22 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.socketService.onUpdateCard().subscribe(cards => {
       this.cards = cards;
-      this.columns = this.refreshDataInColumn();
+      this.refreshDataInColumn();
     });
 
     this.socketService.onAddCard().subscribe(card => {
       this.cards.push(card);
-      this.columns = this.refreshDataInColumn();
+      this.refreshDataInColumn();
     });
 
     this.socketService.onEditCard().subscribe(card => {
       this.cards = this.cards.map(val => (val._id === card._id ? card : val));
-      this.columns = this.refreshDataInColumn();
+      this.refreshDataInColumn();
     });
 
     this.socketService.onDeleteCard().subscribe(card => {
       this.cards = this.cards.filter(val => val._id !== card._id);
-      this.columns = this.refreshDataInColumn();
+      this.refreshDataInColumn();
     });
   }
 
@@ -83,14 +89,15 @@ export class BoardComponent implements OnInit, OnDestroy {
       .getBoardWithColumnsAndCards(this.board._id)
       .subscribe(data => {
         [this.board, this.columns, this.cards] = data;
-        this.columns = this.refreshDataInColumn();
+        this.notFilteredCards = this.cards;
+        this.refreshDataInColumn();
       });
 
     this.userService.getUsers().subscribe(users => (this.users = users));
   }
 
   refreshDataInColumn() {
-    return this.columns.map(val => {
+    this.columns = this.columns.map(val => {
       return {
         ...val,
         cards: !this.cards["info"]
@@ -103,7 +110,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   addCard(card: Card) {
     this.cardService.add(card).subscribe(card => {
       this.cards.push(card);
-      this.columns = this.refreshDataInColumn();
+      this.refreshDataInColumn();
       this.socketService.addCard(this.board._id, card);
     });
   }
@@ -111,7 +118,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   editCard(card: Card) {
     this.cardService.edit(card).subscribe(card => {
       this.cards = this.cards.map(val => (val._id === card._id ? card : val));
-      this.columns = this.refreshDataInColumn();
+      this.refreshDataInColumn();
       this.socketService.editCard(this.board._id, card);
     });
   }
@@ -140,7 +147,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       let card = this.cards.filter(card => card._id === this.selectedCard)[0];
       this.cardService.delete(card._id).subscribe(res => {
         this.cards = this.cards.filter(val => val._id !== card._id);
-        this.columns = this.refreshDataInColumn();
+        this.refreshDataInColumn();
         this.socketService.deleteCard(this.board._id, card);
       });
     } else {
@@ -150,5 +157,21 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   selectCard(cardId) {
     this.selectedCard = this.selectedCard !== cardId ? cardId : null;
+  }
+
+  applyFilters(filter: CardFilter) {
+    this.cards = this.notFilteredCards;
+
+    if (filter.userFilter.length <= 0) {
+      this.refreshDataInColumn();
+      return;
+    }
+
+    this.cards = this.cards.filter(card =>
+      card.assignedUsers.some(user =>
+        filter.userFilter.some(val => val === user.value)
+      )
+    );
+    this.refreshDataInColumn();
   }
 }
