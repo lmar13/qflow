@@ -61,7 +61,7 @@ export class SubboardComponent implements OnInit, OnDestroy {
       // });
     });
 
-    this.socketService.onUpdateCard().subscribe(cards => {
+    this.socketService.onUpdateSubcard().subscribe(cards => {
       this.subcards = cards;
       this.columns = this.refreshDataInColumn();
     });
@@ -106,9 +106,9 @@ export class SubboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  moveCard(data) {
-    this.moveCardData = data;
-  }
+  // moveCard(data) {
+  //   this.moveCardData = data;
+  // }
 
   addCard(card: Card) {
     this.subcardService.add(card).subscribe(card => {
@@ -129,48 +129,24 @@ export class SubboardComponent implements OnInit, OnDestroy {
   }
 
   updateCardPosition(event) {
-    console.log(event);
-    console.log(this.moveCardData);
-
-    const actionType = event.type;
     const cardId = event.item.dataset.cardId;
+    const nextColumnId = event.to.dataset.columnId;
+    const newIndex = event.newIndex;
 
-    const newColumnId = event.target.dataset.columnId;
-    const newContainerData = this.moveCardData.map((val, index) => ({
-      ...val,
-      order: index,
-      columnId: newColumnId
-    }));
+    this.subcards = [
+      ...this.subcards.filter(card => card._id !== cardId),
+      {
+        ...this.subcards.filter(card => card._id === cardId)[0],
+        order: newIndex,
+        columnId: nextColumnId
+      }
+    ];
 
-    const prevColumnId = event.from.dataset.columnId;
-    const prevContainer = this.columns.filter(
-      val => val._id === prevColumnId
-    )[0];
-    let prevContainerData = prevContainer["cards"];
-
-    let editCards = [];
-    if (actionType === "add") {
-      prevContainerData = prevContainerData
-        .filter(val => val._id !== cardId)
-        .map((val, index) => ({ ...val, order: index }));
-      editCards = [
-        ...this.subcards.filter(
-          val => val.columnId !== newColumnId && val.columnId !== prevColumnId
-        ),
-        ...prevContainerData,
-        ...newContainerData
-      ];
-    } else {
-      editCards = [
-        ...this.subcards.filter(val => val.columnId !== newColumnId),
-        ...newContainerData
-      ];
-    }
-
-    this.subcardService.editAll(this.board._id, editCards).subscribe(cards => {
-      this.subcards = cards;
-      this.socketService.updateCard(this.board._id, cards);
-    });
+    this.subcardService
+      .editAll(this.board._id, this.subcards)
+      .subscribe(cards => {
+        this.socketService.updateSubcard(this.board._id, cards);
+      });
   }
 
   deleteCard() {

@@ -1,15 +1,15 @@
-import {Injectable, EventEmitter} from '@angular/core';
-import { Card, Board } from '../model';
-import io from 'socket.io-client';
-import { EnvironmentProviderService } from './environment-provider.service';
-import { Observable } from 'rxjs';
-import { Socket } from 'ngx-socket-io';
-import { tap } from 'rxjs/operators';
+import { Injectable, EventEmitter } from "@angular/core";
+import { Card, Board } from "../model";
+import io from "socket.io-client";
+import { EnvironmentProviderService } from "./environment-provider.service";
+import { Observable } from "rxjs";
+import { Socket } from "ngx-socket-io";
+import { tap } from "rxjs/operators";
 
 // declare var io: any;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class WebSocketService {
   // private socket: any;
@@ -18,10 +18,7 @@ export class WebSocketService {
   // public onCardAdd: EventEmitter<Card>;
   // public onCardUpdate: EventEmitter<Card>;
 
-  constructor(
-    envProvider: EnvironmentProviderService,
-    private socket: Socket
-  ) {
+  constructor(envProvider: EnvironmentProviderService, private socket: Socket) {
     // this.baseUrl = envProvider.current.apiBaseUri;
   }
 
@@ -30,46 +27,54 @@ export class WebSocketService {
   // }
 
   join(boardId: string) {
-    this.socket.emit('joinBoard', boardId);
+    this.socket.emit("joinBoard", boardId);
   }
 
   leave(boardId: string) {
-    this.socket.emit('leaveBoard', boardId);
+    this.socket.emit("leaveBoard", boardId);
   }
 
   onReconnection(): Observable<any> {
-    return this.socket.fromEvent('reconnect');
+    return this.socket.fromEvent("reconnect");
   }
 
   addCard(boardId: string, card: Card) {
-    this.socket.emit('addCard', { boardId, card });
+    this.socket.emit("addCard", { boardId, card });
   }
 
   onAddCard(): Observable<Card> {
-    return this.socket.fromEvent('addCard');
+    return this.socket.fromEvent("addCard");
   }
 
   updateCard(boardId: string, cards: Card[]) {
-    this.socket.emit('updateCard', { boardId, cards });
+    this.socket.emit("updateCard", { boardId, cards });
   }
 
   onUpdateCard(): Observable<Card[]> {
-    return this.socket.fromEvent('updateCard');
+    return this.socket.fromEvent("updateCard");
+  }
+
+  updateSubcard(boardId: string, cards: Card[]) {
+    this.socket.emit("updateSubcard", { boardId, cards });
+  }
+
+  onUpdateSubcard(): Observable<Card[]> {
+    return this.socket.fromEvent("updateSubcard");
   }
 
   editCard(boardId: string, card: Card) {
-    this.socket.emit('editCard', { boardId, card });
+    this.socket.emit("editCard", { boardId, card });
   }
 
   onEditCard(): Observable<Card> {
-    return this.socket.fromEvent('editCard');
+    return this.socket.fromEvent("editCard");
   }
 
   deleteCard(boardId: string, card: Card) {
-    return this.socket.emit('deleteCard', { boardId, card });
+    return this.socket.emit("deleteCard", { boardId, card });
   }
 
   onDeleteCard(): Observable<Card> {
-    return this.socket.fromEvent('deleteCard');
+    return this.socket.fromEvent("deleteCard");
   }
 }

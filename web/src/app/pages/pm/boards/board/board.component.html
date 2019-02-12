@@ -30,7 +30,7 @@
           <h4 [innerHtml]="column.title"></h4>
         </div>
         <div [sortablejs]="column.cards" [sortablejsOptions]="options" [attr.data-column-id]="column._id" class="card-list"
-          style="height: 100%;" (drop)="moveCard(column.cards)">
+          style="height: 100%;">
           <div *ngFor="let card of column.cards" [attr.data-card-id]="card._id" (click)="selectCard(card._id)">
             <ngx-card [card]="card" [columns]="columns" [users]="users" (onDeleteCard)="deleteCard($event)" [selected]="card._id === selectedCard"></ngx-card>
           </div>

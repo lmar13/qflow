@@ -47,6 +47,18 @@ module.exports = function (server, origins) {
         .emit('updateCard', cards);
     });
 
+    socket.on('updateSubcard', ({
+      boardId,
+      cards
+    }) => {
+      log('updateSubcard: ', {
+        boardId,
+        cards
+      });
+      socket.broadcast.to(boardId)
+        .emit('updateSubcard', cards);
+    });
+
     socket.on('editCard', ({
       boardId,
       card
