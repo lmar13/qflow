@@ -44,8 +44,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true
   },
   {
-    title: "Statistic",
-    icon: "nb-bar-chart"
+    title: "Statistics",
+    icon: "nb-bar-chart",
+    children: [
+      {
+        title: "Projects",
+        link: "/pages/stat/projects"
+      }
+    ]
   },
   {
     title: "Admin Panel",

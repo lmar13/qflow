@@ -19,7 +19,7 @@ import { ThemeModule } from "./@theme/theme.module";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
-const config: SocketIoConfig = { url: "http://localhost:3000", options: {} };
+const config: SocketIoConfig = { url: environment.apiBaseUri, options: {} };
 
 @NgModule({
   declarations: [AppComponent],

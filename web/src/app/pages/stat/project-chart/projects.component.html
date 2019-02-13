@@ -1,0 +1,6 @@
+<div class="chart-container">
+  <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
+  <ngx-chart-panel-header [type]="period" (periodChange)="setPeriodAndGetChartData($event)">
+  </ngx-chart-panel-header>
+  <ngx-project-chart #projectChart [profitChartData]="profitChartData"></ngx-project-chart>
+</div>

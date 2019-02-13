@@ -25,8 +25,13 @@ const routes: Routes = [
         component: TaskRegisterComponent
       },
       {
+        path: "stat",
+        loadChildren: "./stat/stat.module#StatModule",
+        canLoad: [UserIsSignedInGuard]
+      },
+      {
         path: "admin",
-        loadChildren: "app/pages/admin/admin.module#AdminModule",
+        loadChildren: "./admin/admin.module#AdminModule",
         canLoad: [UserIsAuthorizeGuard]
       },
       {
