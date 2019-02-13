@@ -6,6 +6,7 @@ import { BoardService } from "../../../../@core/data/board.service";
 import { Board, Column, Card, User, CardFilter } from "../../../../@core/model";
 import { CardService } from "../../../../@core/data/card.service";
 import { UserService } from "../../../../@core/data/users.service";
+import { NbSidebarService, NbMenuItem } from "@nebular/theme";
 
 @Component({
   selector: "ngx-board",
@@ -18,9 +19,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   cards = [] as Card[];
   notFilteredCards = [] as Card[];
   users = [] as User[];
-  moveCardData = null;
   selectedCard: string;
-  filterOption: any;
 
   options: SortablejsOptions = {
     group: "board",
@@ -37,7 +36,8 @@ export class BoardComponent implements OnInit, OnDestroy {
     private boardService: BoardService,
     private cardService: CardService,
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sidebarService: NbSidebarService
   ) {}
 
   ngOnInit() {
@@ -50,10 +50,6 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.socketService.leave(this.board._id);
   }
 
-  writeToConsole() {
-    console.log(this.filterOption);
-  }
-
   initConfig() {
     this.route.params.subscribe(param => {
       this.board._id = param.boardId;
@@ -63,28 +59,29 @@ export class BoardComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.socketService.onUpdateCard().subscribe(cards => {
-      this.cards = cards;
-      this.refreshDataInColumn();
+    this.socketService.onUpdateCard().subscribe(() => {
+      this.fetchBoardData();
     });
 
-    this.socketService.onAddCard().subscribe(card => {
-      this.cards.push(card);
-      this.refreshDataInColumn();
+    this.socketService.onAddCard().subscribe(() => {
+      this.fetchBoardData();
     });
 
-    this.socketService.onEditCard().subscribe(card => {
-      this.cards = this.cards.map(val => (val._id === card._id ? card : val));
-      this.refreshDataInColumn();
+    this.socketService.onEditCard().subscribe(() => {
+      this.fetchBoardData();
     });
 
-    this.socketService.onDeleteCard().subscribe(card => {
-      this.cards = this.cards.filter(val => val._id !== card._id);
-      this.refreshDataInColumn();
+    this.socketService.onDeleteCard().subscribe(() => {
+      this.fetchBoardData();
     });
   }
 
   initFetchData() {
+    this.fetchBoardData();
+    this.userService.getUsers().subscribe(users => (this.users = users));
+  }
+
+  fetchBoardData() {
     this.boardService
       .getBoardWithColumnsAndCards(this.board._id)
       .subscribe(data => {
@@ -92,8 +89,6 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.notFilteredCards = this.cards;
         this.refreshDataInColumn();
       });
-
-    this.userService.getUsers().subscribe(users => (this.users = users));
   }
 
   refreshDataInColumn() {
@@ -109,16 +104,14 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   addCard(card: Card) {
     this.cardService.add(card).subscribe(card => {
-      this.cards.push(card);
-      this.refreshDataInColumn();
+      this.fetchBoardData();
       this.socketService.addCard(this.board._id, card);
     });
   }
 
   editCard(card: Card) {
     this.cardService.edit(card).subscribe(card => {
-      this.cards = this.cards.map(val => (val._id === card._id ? card : val));
-      this.refreshDataInColumn();
+      this.fetchBoardData();
       this.socketService.editCard(this.board._id, card);
     });
   }
@@ -138,6 +131,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     ];
 
     this.cardService.editAll(this.board._id, this.cards).subscribe(cards => {
+      this.fetchBoardData();
       this.socketService.updateCard(this.board._id, cards);
     });
   }
@@ -146,8 +140,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     if (this.selectedCard) {
       let card = this.cards.filter(card => card._id === this.selectedCard)[0];
       this.cardService.delete(card._id).subscribe(res => {
-        this.cards = this.cards.filter(val => val._id !== card._id);
-        this.refreshDataInColumn();
+        this.fetchBoardData();
         this.socketService.deleteCard(this.board._id, card);
       });
     } else {
@@ -157,6 +150,11 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   selectCard(cardId) {
     this.selectedCard = this.selectedCard !== cardId ? cardId : null;
+  }
+
+  toggleFiltersSidebar(): boolean {
+    this.sidebarService.toggle(false, "filters-sidebar");
+    return false;
   }
 
   applyFilters(filter: CardFilter) {

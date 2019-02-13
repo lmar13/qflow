@@ -37,19 +37,8 @@ export class CardFilterComponent {
 
   ngOnDestroy() {}
 
-  open(dialog: TemplateRef<any>) {
-    this.dialogRef = this.dialogService.open(dialog, {
-      closeOnBackdropClick: false,
-      closeOnEsc: false
-    });
-  }
-
   setUsers(val: string[]) {
     this.filter.userFilter = val;
-  }
-
-  submit() {
     this.filterSet.emit({ ...this.filter });
-    this.dialogRef.close();
   }
 }

@@ -13,8 +13,9 @@
       <nb-action [class.disabled]="!selectedCard" [disabled]="!selectedCard">
         <span (click)="deleteCard()">Delete card</span>
       </nb-action>
-      <nb-action>
-        <ngx-card-filter (filterSet)="applyFilters($event)"></ngx-card-filter>
+      <nb-action icon="nb-gear" (click)="toggleFiltersSidebar()">
+        <!-- <ngx-card-filter (filterSet)="applyFilters($event)"></ngx-card-filter> -->
+
       </nb-action>
     </nb-actions>
 
@@ -41,3 +42,7 @@
     </div>
   </div>
 </div>
+
+<nb-sidebar class="filters-sidebar" tag="filters-sidebar" state="collapsed" fixed end>
+  <ngx-card-filter (filterSet)="applyFilters($event)"></ngx-card-filter>
+</nb-sidebar>

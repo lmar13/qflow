@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, Input } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { SortablejsOptions } from "angular-sortablejs";
-import { Board, Column, Card, User } from "../../../@core/model";
+import { Board, Column, Card, User, CardFilter } from "../../../@core/model";
 import { WebSocketService } from "../../../@core/data/ws.service";
 import { BoardService } from "../../../@core/data/board.service";
 // import { CardService } from "../../../@core/data/card.service";
@@ -19,6 +19,7 @@ export class SubboardComponent implements OnInit, OnDestroy {
   board = {} as Board;
   columns = [] as Column[];
   subcards = [] as Card[];
+  notFilteredSubcards = [] as Card[];
   users = [] as User[];
   moveCardData = null;
   selectedCard: string;
@@ -36,7 +37,6 @@ export class SubboardComponent implements OnInit, OnDestroy {
   constructor(
     private socketService: WebSocketService,
     private boardService: BoardService,
-    // private cardService: CardService,
     private subcardService: SubcardService,
     private userService: UserService,
     private route: ActivatedRoute
@@ -55,48 +55,42 @@ export class SubboardComponent implements OnInit, OnDestroy {
   initConfig() {
     this.route.params.subscribe(param => {
       this.board._id = param.boardId;
-      // this.socketService.join(param.boardId);
-      // this.socketService.onReconnection().subscribe(() => {
-      //   this.socketService.join(param.boardId);
-      // });
     });
 
     this.socketService.onUpdateSubcard().subscribe(cards => {
-      this.subcards = cards;
-      this.columns = this.refreshDataInColumn();
+      this.fetchSubboardData();
     });
 
     this.socketService.onAddCard().subscribe(card => {
-      this.subcards.push(card);
-      this.columns = this.refreshDataInColumn();
+      this.fetchSubboardData();
     });
 
     this.socketService.onEditCard().subscribe(card => {
-      this.subcards = this.subcards.map(val =>
-        val._id === card._id ? card : val
-      );
-      this.columns = this.refreshDataInColumn();
+      this.fetchSubboardData();
     });
 
     this.socketService.onDeleteCard().subscribe(card => {
-      this.subcards = this.subcards.filter(val => val._id !== card._id);
-      this.columns = this.refreshDataInColumn();
+      this.fetchSubboardData();
     });
   }
 
   initFetchData() {
+    this.fetchSubboardData();
+    this.userService.getUsers().subscribe(users => (this.users = users));
+  }
+
+  fetchSubboardData() {
     this.boardService
       .getBoardWithColumnsAndSubcards(this.board._id, this.card._id)
       .subscribe(data => {
         [this.board, this.columns, this.subcards] = data;
-        this.columns = this.refreshDataInColumn();
+        this.notFilteredSubcards = this.subcards;
+        this.refreshDataInColumn();
       });
-
-    this.userService.getUsers().subscribe(users => (this.users = users));
   }
 
   refreshDataInColumn() {
-    return this.columns.map(val => {
+    this.columns = this.columns.map(val => {
       return {
         ...val,
         cards: !this.subcards["info"]
@@ -106,24 +100,16 @@ export class SubboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  // moveCard(data) {
-  //   this.moveCardData = data;
-  // }
-
   addCard(card: Card) {
     this.subcardService.add(card).subscribe(card => {
-      this.subcards.push(card);
-      this.columns = this.refreshDataInColumn();
+      this.fetchSubboardData();
       this.socketService.addCard(this.board._id, card);
     });
   }
 
   editCard(card: Card) {
     this.subcardService.edit(card).subscribe(card => {
-      this.subcards = this.subcards.map(val =>
-        val._id === card._id ? card : val
-      );
-      this.columns = this.refreshDataInColumn();
+      this.fetchSubboardData();
       this.socketService.editCard(this.board._id, card);
     });
   }
@@ -145,6 +131,7 @@ export class SubboardComponent implements OnInit, OnDestroy {
     this.subcardService
       .editAll(this.board._id, this.subcards)
       .subscribe(cards => {
+        this.fetchSubboardData();
         this.socketService.updateSubcard(this.board._id, cards);
       });
   }
@@ -155,8 +142,7 @@ export class SubboardComponent implements OnInit, OnDestroy {
         card => card._id === this.selectedCard
       )[0];
       this.subcardService.delete(card._id).subscribe(res => {
-        this.subcards = this.subcards.filter(val => val._id !== card._id);
-        this.columns = this.refreshDataInColumn();
+        this.fetchSubboardData();
         this.socketService.deleteCard(this.board._id, card);
       });
     } else {
@@ -166,5 +152,21 @@ export class SubboardComponent implements OnInit, OnDestroy {
 
   selectCard(cardId) {
     this.selectedCard = this.selectedCard !== cardId ? cardId : null;
+  }
+
+  applyFilters(filter: CardFilter) {
+    this.subcards = this.notFilteredSubcards;
+
+    if (filter.userFilter.length <= 0) {
+      this.refreshDataInColumn();
+      return;
+    }
+
+    this.subcards = this.subcards.filter(card =>
+      card.assignedUsers.some(user =>
+        filter.userFilter.some(val => val === user.value)
+      )
+    );
+    this.refreshDataInColumn();
   }
 }
