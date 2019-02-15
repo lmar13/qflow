@@ -91,6 +91,7 @@ const subcardRoutes = require('./src/routes/subcard.routes.js')(app);
 const columnRoutes = require('./src/routes/column.routes.js')(app);
 const boardRoutes = require('./src/routes/board.routes.js')(app);
 const userRoutes = require('./src/routes/user.routes.js')(app);
+const statRoutes = require('./src/routes/stat.routes.js')(app);
 const authRoutes = require('./src/routes/auth.routes.js')(app);
 const passport = require('./src/auth-config/passport.js');
 

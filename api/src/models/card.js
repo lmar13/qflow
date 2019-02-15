@@ -16,6 +16,8 @@ const cardSchema = mongoose.Schema({
     display: String,
     readonly: Boolean,
   }],
+  startDate: Date,
+  endDate: Date,
 });
 
 module.exports = mongoose.model('Card', cardSchema);
