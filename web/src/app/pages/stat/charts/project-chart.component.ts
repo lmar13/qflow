@@ -1,3 +1,4 @@
+import { ProjectChartService } from "./../../../@core/data/project-chart.service";
 import {
   AfterViewInit,
   Component,
@@ -36,7 +37,8 @@ export class ProjectChartComponent
 
   constructor(
     private theme: NbThemeService,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private projectChartService: ProjectChartService
   ) {
     this.layoutService
       .onChangeLayoutSize()
@@ -56,7 +58,6 @@ export class ProjectChartComponent
       .pipe(takeWhile(() => this.alive))
       .subscribe(config => {
         const eTheme: any = config.variables.profit;
-
         this.setOptions(eTheme);
       });
   }
@@ -118,7 +119,7 @@ export class ProjectChartComponent
       ],
       series: [
         {
-          name: "Canceled",
+          name: "Projects",
           type: "bar",
           barGap: 0,
           barWidth: "20%",
@@ -139,7 +140,7 @@ export class ProjectChartComponent
           data: this.profitChartData.data[0]
         },
         {
-          name: "Payment",
+          name: "Project Tasks",
           type: "bar",
           barWidth: "20%",
           itemStyle: {
@@ -159,7 +160,7 @@ export class ProjectChartComponent
           data: this.profitChartData.data[1]
         },
         {
-          name: "All orders",
+          name: "Ad-hoc Tasks",
           type: "bar",
           barWidth: "20%",
           itemStyle: {
