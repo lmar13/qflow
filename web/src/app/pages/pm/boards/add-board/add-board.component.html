@@ -19,12 +19,12 @@
               <div class="col">
                 <label for="title">Start Date</label>
                 <input nbInput formControlName="startDate" fullWidth [nbDatepicker]="startDateControl" shape="semi-round">
-                <nb-datepicker #startDateControl (dateChange)="changeMinDate($event)" [max]="maxDate"></nb-datepicker>
+                <nb-datepicker #startDateControl [max]="form.controls['endDate'].value"></nb-datepicker>
               </div>
               <div class="col">
                 <label for="title">End Date</label>
                 <input nbInput formControlName="endDate" fullWidth [nbDatepicker]="endDateControl" shape="semi-round">
-                <nb-datepicker #endDateControl (dateChange)="changeMaxDate($event)" [min]="minDate"></nb-datepicker>
+                <nb-datepicker #endDateControl [min]="form.controls['startDate'].value"></nb-datepicker>
               </div>
             </div>
             <div class="form-group">

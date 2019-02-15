@@ -33,6 +33,9 @@ export class AddCardComponent implements OnDestroy {
   form: FormGroup;
   dialogRef: any;
 
+  date = new Date();
+  filter = date => date.getDay() !== 0 && date.getDay() !== 6;
+
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -61,7 +64,9 @@ export class AddCardComponent implements OnDestroy {
       content: [""],
       columnId: ["", Validators.required],
       assignedUsers: [[readOnlyUser], Validators.required],
-      owner: [""]
+      owner: [""],
+      startDate: [new Date(Date.now()), Validators.required],
+      endDate: [new Date(Date.now()), Validators.required]
     });
   }
 

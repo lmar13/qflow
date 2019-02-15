@@ -31,8 +31,9 @@ export class AddBoardComponent {
   form: FormGroup;
   layoutForm: FormGroup;
   dialogRef: any;
-  maxDate: Date;
-  minDate: Date;
+
+  date = new Date();
+  filter = date => date.getDay() !== 0 && date.getDay() !== 6;
 
   initColumns = ["Planning", "Development", "Testing", "Ready to archive"];
 
@@ -57,8 +58,8 @@ export class AddBoardComponent {
       title: ["", Validators.required],
       assignedUsers: [[readOnlyUser], Validators.required],
       owner: [email],
-      startDate: ["", Validators.required],
-      endDate: ["", Validators.required]
+      startDate: [new Date(Date.now()), Validators.required],
+      endDate: [new Date(Date.now()), Validators.required]
     });
 
     this.layoutForm = this.fb.group({
@@ -89,14 +90,6 @@ export class AddBoardComponent {
     this.getDefaultData();
     this.createForm();
     // }
-  }
-
-  changeMinDate(date) {
-    this.minDate = date;
-  }
-
-  changeMaxDate(date) {
-    this.maxDate = date;
   }
 
   addField() {

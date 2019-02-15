@@ -37,6 +37,9 @@ export class EditBoardComponent {
   form: FormGroup;
   dialogRef: any;
 
+  date = new Date();
+  filter = date => date.getDay() !== 0 && date.getDay() !== 6;
+
   constructor(
     private dialogService: NbDialogService,
     private fb: FormBuilder,
@@ -50,8 +53,8 @@ export class EditBoardComponent {
       title: [this.board.title, Validators.required],
       assignedUsers: [this.board.assignedUsers, Validators.required],
       owner: [this.board.owner.email],
-      startDate: [this.board.startDate, Validators.required],
-      endDate: [this.board.endDate]
+      startDate: [new Date(this.board.startDate), Validators.required],
+      endDate: [new Date(this.board.endDate)]
     });
   }
 

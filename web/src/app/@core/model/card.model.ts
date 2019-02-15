@@ -13,4 +13,6 @@ export interface Card {
     email: string;
   };
   assignedUsers: AutoCompleteTag[];
+  startDate: Date;
+  endDate: Date;
 }

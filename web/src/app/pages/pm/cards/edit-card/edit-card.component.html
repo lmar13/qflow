@@ -33,6 +33,18 @@
                 <small *ngIf="form.controls['columnId'].hasError('required')" class="text-danger">Field is required!</small>
               </div>
             </div>
+            <div class="form-group row">
+              <div class="col">
+                <label for="title">Start Date</label>
+                <input nbInput formControlName="startDate" fullWidth [nbDatepicker]="startDateControl" shape="semi-round">
+                <nb-datepicker #startDateControl [filter]="filter"></nb-datepicker>
+              </div>
+              <div class="col">
+                <label for="title">End Date</label>
+                <input nbInput formControlName="endDate" fullWidth [nbDatepicker]="endDateControl" shape="semi-round">
+                <nb-datepicker #endDateControl [min]="form.controls['startDate'].value" [filter]="filter"></nb-datepicker>
+              </div>
+            </div>
             <div class="form-group">
               <label for="title">Assaigned Users</label>
               <!-- <nb-select formControlName="assignedUsers" placeholder="Assign users" multiple outline status="primary" shape="semi-round">

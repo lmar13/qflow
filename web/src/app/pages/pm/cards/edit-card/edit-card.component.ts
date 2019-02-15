@@ -47,6 +47,9 @@ export class EditCardComponent implements OnDestroy {
   form: FormGroup;
   dialogRef: any;
 
+  date = new Date();
+  filter = date => date.getDay() !== 0 && date.getDay() !== 6;
+
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -74,7 +77,9 @@ export class EditCardComponent implements OnDestroy {
         })),
         Validators.required
       ],
-      owner: [this.card.owner.email]
+      owner: [this.card.owner.email],
+      startDate: [new Date(this.card.startDate), Validators.required],
+      endDate: [new Date(this.card.endDate)]
     });
   }
 
