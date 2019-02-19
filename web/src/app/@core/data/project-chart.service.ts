@@ -51,4 +51,8 @@ export class ProjectChartService {
   getProjectChartData(period: string): Observable<any> {
     return this.data[period];
   }
+
+  getProjectSummary(): Observable<any> {
+    return this.httpClient.get(`${this.baseUrl}/stat/summary`);
+  }
 }

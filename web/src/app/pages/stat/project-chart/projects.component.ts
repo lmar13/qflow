@@ -27,12 +27,9 @@ export class ProjectsComponent implements OnDestroy {
     private ordersProfitChartService: OrdersProfitChartData,
     private projectChartService: ProjectChartService
   ) {
-    this.ordersProfitChartService
-      .getOrderProfitChartSummary()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(summary => {
-        this.chartPanelSummary = summary;
-      });
+    this.projectChartService.getProjectSummary().subscribe(result => {
+      this.chartPanelSummary = result;
+    });
 
     // this.getProfitChartData(this.period);
     this.getProfitChartDataNew(this.period);
