@@ -25,6 +25,26 @@ const weekMatch = () => {
     }]
 };
 
+const weekMatchForUsers = users => {
+    const dateNow = new Date();
+    const dateBefore = new Date(dateNow);
+    dateBefore.setDate(dateBefore.getDate() - dateBefore.getDay());
+
+    return [{
+        $match: {
+            'assignedUsers.value': {
+                $in: users.map(user => user._id)
+            },
+            startDate: {
+                $lte: dateNow
+            },
+            endDate: {
+                $gte: dateBefore
+            }
+        }
+    }]
+}
+
 const weekGroup = date => ({
     _id: {
         dayOfWeek: {
@@ -86,7 +106,8 @@ const getNumberOfWeek = () => {
 
 module.exports = {
     week: getWeek(),
-    weekMatch: weekMatch(),
+    weekMatch: weekMatch,
+    weekMatchForUsers: weekMatchForUsers,
     weekGroup: weekGroup,
     weekArray: createWeekArrayFromResult,
     nrWeek: getNumberOfWeek(),

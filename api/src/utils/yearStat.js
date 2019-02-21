@@ -5,6 +5,18 @@ const getYear = () => ([
     '2019',
 ]);
 
+const yearMatchForUsers = users => [{
+    $match: {
+        'assignedUsers.value': {
+            $in: users.map(user => user._id)
+        }
+    }
+}];
+
+const yearMatch = () => [{
+    $match: {}
+}];
+
 const yearGroup = date => ({
     _id: {
         year: {
@@ -49,6 +61,8 @@ const createYearArrayFromResult = (result = [], result2 = []) => {
 };
 
 module.exports = {
+    yearMatch: yearMatch,
+    yearMatchForUsers: yearMatchForUsers,
     yearGroup: yearGroup,
     yearArray: createYearArrayFromResult,
     year: getYear()

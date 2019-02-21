@@ -5,6 +5,25 @@ const getMonth = () => ([
     'Oct', 'Nov', 'Dec',
 ]);
 
+const monthMatchForUsers = users => {
+    const dateNow = new Date();
+    const dateBefore = new Date(new Date().getFullYear(), 0, 1);
+
+    return [{
+        $match: {
+            'assignedUsers.value': {
+                $in: users.map(user => user._id)
+            },
+            startDate: {
+                $lte: dateNow
+            },
+            endDate: {
+                $gt: dateBefore
+            }
+        }
+    }]
+};
+
 const monthMatch = () => {
     const dateNow = new Date();
     const dateBefore = new Date(new Date().getFullYear(), 0, 1);
@@ -75,7 +94,8 @@ const getNumberOfYear = () => {
 }
 
 module.exports = {
-    monthMatch: monthMatch(),
+    monthMatch: monthMatch,
+    monthMatchForUsers: monthMatchForUsers,
     monthGroup: monthGroup,
     monthArray: createMonthArrayFromResult,
     month: getMonth(),
