@@ -28,7 +28,7 @@ import * as echarts from "echarts";
 export class ProjectChartComponent
   implements AfterViewInit, OnDestroy, OnChanges {
   @Input()
-  profitChartData: ProfitChart;
+  projectChartData: ProfitChart;
 
   private alive = true;
 
@@ -48,7 +48,7 @@ export class ProjectChartComponent
 
   ngOnChanges(): void {
     if (this.echartsIntance) {
-      this.updateProfitChartOptions(this.profitChartData);
+      this.updateProfitChartOptions(this.projectChartData);
     }
   }
 
@@ -83,7 +83,7 @@ export class ProjectChartComponent
       xAxis: [
         {
           type: "category",
-          data: this.profitChartData.chartLabel,
+          data: this.projectChartData.chartLabel,
           axisTick: {
             alignWithLabel: true
           },
@@ -137,7 +137,7 @@ export class ProjectChartComponent
               ])
             }
           },
-          data: this.profitChartData.data[0]
+          data: this.projectChartData.data[0]
         },
         {
           name: "Project Tasks",
@@ -157,7 +157,7 @@ export class ProjectChartComponent
               ])
             }
           },
-          data: this.profitChartData.data[1]
+          data: this.projectChartData.data[1]
         },
         {
           name: "Ad-hoc Tasks",
@@ -177,7 +177,7 @@ export class ProjectChartComponent
               ])
             }
           },
-          data: this.profitChartData.data[2]
+          data: this.projectChartData.data[2]
         }
       ]
     };
@@ -190,7 +190,7 @@ export class ProjectChartComponent
     this.echartsIntance.setOption({
       series: series,
       xAxis: {
-        data: this.profitChartData.chartLabel
+        data: this.projectChartData.chartLabel
       }
     });
   }

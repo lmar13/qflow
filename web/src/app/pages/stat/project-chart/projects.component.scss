@@ -16,6 +16,9 @@ ngx-profit-chart {
 @import '~@nebular/theme/styles/global/breakpoints';
 
 @include nb-install-component() {
+
+
+
   .summary-container {
     display: flex;
     flex: 1;

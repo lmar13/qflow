@@ -1,11 +1,6 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
-import { takeWhile } from "rxjs/operators";
-import {
-  OrdersProfitChartData,
-  OrderProfitChartSummary
-} from "../../../@core/data/orders-profit-chart";
-import { ProfitChart } from "../../../@core/data/profit-chart";
+import { Component, OnDestroy } from "@angular/core";
 import { ProjectChartService } from "../../../@core/data/project-chart.service";
+import { ProjectChart, ProjectChartSummary } from "../../../@core/model";
 
 @Component({
   selector: "ngx-projects",
@@ -15,24 +10,19 @@ import { ProjectChartService } from "../../../@core/data/project-chart.service";
 export class ProjectsComponent implements OnDestroy {
   private alive = true;
 
-  chartPanelSummary: OrderProfitChartSummary[];
+  chartPanelSummary: ProjectChartSummary[];
   period: string = "week";
-  // profitChartData: ProfitChart;
-  profitChartData = {
+  projectChartData = {
     chartLabel: [],
     data: []
-  } as ProfitChart;
+  } as ProjectChart;
 
-  constructor(
-    private ordersProfitChartService: OrdersProfitChartData,
-    private projectChartService: ProjectChartService
-  ) {
+  constructor(private projectChartService: ProjectChartService) {
     this.projectChartService.getProjectSummary().subscribe(result => {
       this.chartPanelSummary = result;
     });
 
-    // this.getProfitChartData(this.period);
-    this.getProfitChartDataNew(this.period);
+    this.getProjectChartData(this.period);
   }
 
   setPeriodAndGetChartData(value: string): void {
@@ -40,25 +30,15 @@ export class ProjectsComponent implements OnDestroy {
       this.period = value;
     }
 
-    this.getProfitChartDataNew(value);
-    // this.getProfitChartData(value);
+    this.getProjectChartData(value);
   }
 
-  getProfitChartDataNew(period: string) {
+  getProjectChartData(period: string) {
     this.projectChartService.getProjectChartData(period).subscribe(result => {
       console.log(result);
-      this.profitChartData = result;
+      this.projectChartData = result;
     });
   }
-
-  // getProfitChartData(period: string) {
-  //   this.ordersProfitChartService
-  //     .getProfitChartData(period)
-  //     .pipe(takeWhile(() => this.alive))
-  //     .subscribe(profitChartData => {
-  //       this.profitChartData = profitChartData;
-  //     });
-  // }
 
   ngOnDestroy() {
     this.alive = false;

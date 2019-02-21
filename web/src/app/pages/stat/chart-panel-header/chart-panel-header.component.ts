@@ -11,6 +11,7 @@ import {
   NbThemeService
 } from "@nebular/theme";
 import { takeWhile } from "rxjs/operators";
+import { User } from "../../../@core/model";
 
 @Component({
   selector: "ngx-chart-panel-header",
@@ -21,6 +22,7 @@ export class ChartPanelHeaderComponent implements OnDestroy {
   private alive = true;
 
   @Output() periodChange = new EventEmitter<string>();
+  @Output() usersChange = new EventEmitter<User[]>();
 
   @Input() type: string = "week";
 
