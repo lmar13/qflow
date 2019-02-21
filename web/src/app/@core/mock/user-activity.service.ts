@@ -1,18 +1,17 @@
-import { Injectable } from '@angular/core';
-import { of as observableOf,  Observable } from 'rxjs';
-import { PeriodsService } from './periods.service';
-import { UserActive, UserActivityData } from '../data/user-activity';
+import { Injectable } from "@angular/core";
+import { of as observableOf, Observable } from "rxjs";
+import { PeriodsService } from "../data/periods.service";
+import { UserActive, UserActivityData } from "../data/user-activity";
 
 @Injectable()
 export class UserActivityService extends UserActivityData {
-
   private getRandom = (roundTo: number) => Math.round(Math.random() * roundTo);
   private generateUserActivityRandomData(date) {
     return {
       date,
       pagesVisitCount: this.getRandom(1000),
       deltaUp: this.getRandom(1) % 2 === 0,
-      newVisits: this.getRandom(100),
+      newVisits: this.getRandom(100)
     };
   }
 
@@ -23,12 +22,12 @@ export class UserActivityService extends UserActivityData {
     this.data = {
       week: this.getDataWeek(),
       month: this.getDataMonth(),
-      year: this.getDataYear(),
+      year: this.getDataYear()
     };
   }
 
   private getDataWeek(): UserActive[] {
-    return this.periods.getWeeks().map((week) => {
+    return this.periods.getWeeks().map(week => {
       return this.generateUserActivityRandomData(week);
     });
   }
@@ -46,7 +45,7 @@ export class UserActivityService extends UserActivityData {
   }
 
   private getDataYear(): UserActive[] {
-    return this.periods.getYears().map((year) => {
+    return this.periods.getYears().map(year => {
       return this.generateUserActivityRandomData(year);
     });
   }
