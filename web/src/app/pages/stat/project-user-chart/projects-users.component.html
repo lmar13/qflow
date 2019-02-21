@@ -1,0 +1,11 @@
+<div class="chart-container">
+  <ngx-chart-panel-summary [summary]="chartPanelSummary"></ngx-chart-panel-summary>
+  <div>
+    <nb-select multiple placeholder="Users" (selectedChange)="setUsersAndGetChartData($event)">
+      <nb-option *ngFor="let user of users" [value]="user">{{ user.email }}</nb-option>
+    </nb-select>
+  </div>
+  <ngx-chart-panel-header [type]="period" (periodChange)="setUsersAndGetChartData($event)">
+  </ngx-chart-panel-header>
+  <ngx-project-chart #projectChart [projectChartData]="projectChartData"></ngx-project-chart>
+</div>

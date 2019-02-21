@@ -1,3 +1,5 @@
+import { ProjectsMyComponent } from "./project-my-chart/projects-my.component";
+import { ProjectsUsersComponent } from "./project-user-chart/projects-users.component";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { ProjectsComponent } from "./project-chart/projects.component";
@@ -11,6 +13,14 @@ const routes: Routes = [
       {
         path: "projects",
         component: ProjectsComponent
+      },
+      {
+        path: "users",
+        component: ProjectsUsersComponent
+      },
+      {
+        path: "my",
+        component: ProjectsMyComponent
       }
     ]
   }

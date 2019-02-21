@@ -1,3 +1,5 @@
+import { ProjectsMyComponent } from "./project-my-chart/projects-my.component";
+import { ProjectsUsersComponent } from "./project-user-chart/projects-users.component";
 import { ChartPanelSummaryComponent } from "./chart-panel-summary/chart-panel-summary.component";
 import { ChartPanelHeaderComponent } from "./chart-panel-header/chart-panel-header.component";
 import { LegendChartComponent } from "./legend-chart/legend-chart.component";
@@ -14,6 +16,8 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
 const STAT_COMPONENTS = [
   StatComponent,
   ProjectsComponent,
+  ProjectsUsersComponent,
+  ProjectsMyComponent,
   ProjectChartComponent,
   LegendChartComponent,
   ChartPanelHeaderComponent,

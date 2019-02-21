@@ -48,8 +48,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: "nb-bar-chart",
     children: [
       {
-        title: "Projects",
+        title: "All Projects",
         link: "/pages/stat/projects"
+      },
+      {
+        title: "Projects for users",
+        link: "/pages/stat/users"
+      },
+      {
+        title: "My projects",
+        link: "/pages/stat/my"
       }
     ]
   },
