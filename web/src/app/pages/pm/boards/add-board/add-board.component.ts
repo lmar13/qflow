@@ -12,6 +12,9 @@ import { User, Board, AutoCompleteTag, Column } from "../../../../@core/model";
 import { UserService } from "../../../../@core/data/users.service";
 import { AuthService } from "../../../../@core/auth/shared/auth.service";
 import { BoardService } from "../../../../@core/data/board.service";
+import { query } from "@angular/core/src/render3";
+import { SkillsService } from "../../../../@core/data/skills.service";
+import * as _ from "lodash";
 
 @Component({
   selector: "ngx-add-board",
@@ -30,7 +33,12 @@ export class AddBoardComponent {
 
   form: FormGroup;
   layoutForm: FormGroup;
+  skillForm: FormGroup;
   dialogRef: any;
+  skills: any;
+  usersForSkills = [];
+  usersForSkillsContainer = [];
+  selectedSkills = [];
 
   date = new Date();
   filter = date => date.getDay() !== 0 && date.getDay() !== 6;
@@ -42,8 +50,15 @@ export class AddBoardComponent {
     private fb: FormBuilder,
     private userService: UserService,
     private authService: AuthService,
-    private boardService: BoardService
-  ) {}
+    private boardService: BoardService,
+    private skillsService: SkillsService
+  ) {
+    this.skillsService.get().subscribe(skills => (this.skills = skills));
+    this.skillsService.getUsersForSkills().subscribe(users => {
+      console.log(users);
+      this.usersForSkillsContainer = users;
+    });
+  }
 
   private createForm() {
     const { email, _id } = this.authService.decToken;
@@ -63,13 +78,26 @@ export class AddBoardComponent {
     });
 
     this.layoutForm = this.fb.group({
-      fields: this.fb.array(this.initColumns.map(col => this.initFields(col)))
+      fields: this.fb.array(
+        this.initColumns.map(col => this.initColumnFields(col))
+      )
+    });
+
+    this.skillForm = this.fb.group({
+      fields: this.fb.array([this.initSkillFields()])
     });
   }
 
-  initFields(col = "") {
+  initColumnFields(col = "") {
     return this.fb.group({
       colName: [col, Validators.required]
+    });
+  }
+
+  initSkillFields(skill = "") {
+    return this.fb.group({
+      skillName: [skill, Validators.required],
+      assignedUsers: ["", Validators.required]
     });
   }
 
@@ -92,14 +120,36 @@ export class AddBoardComponent {
     // }
   }
 
-  addField() {
+  addColumnField() {
     const control = <FormArray>this.layoutForm.controls["fields"];
-    control.push(this.initFields());
+    control.push(this.initColumnFields());
   }
 
-  deleteField(i: number) {
+  deleteColumnField(i: number) {
     const control = <FormArray>this.layoutForm.controls["fields"];
     control.removeAt(control.length - 1);
+  }
+
+  addSkillField() {
+    const control = <FormArray>this.skillForm.controls["fields"];
+    control.push(this.initSkillFields());
+  }
+
+  deleteSkillField(i: number) {
+    const control = <FormArray>this.skillForm.controls["fields"];
+    control.removeAt(control.length - 1);
+  }
+
+  getUsersForSkill(item) {
+    console.log(item);
+    if (!item) {
+      item = {
+        Skill: ""
+      };
+    }
+    this.usersForSkills = this.usersForSkillsContainer.filter(
+      user => user.TechnicalSkill === item.Skill
+    );
   }
 
   submit() {
@@ -107,6 +157,12 @@ export class AddBoardComponent {
     let layoutData: Column = this.layoutForm.controls["fields"].value.map(
       col => col.colName
     );
+    // let skillData: any = this.skillForm.controls['fields'].value.map(record => ({
+    //   skillName: record.skillName,
+
+    // }));
+
+    // console.log(skillData);
 
     const { _id, email } = this.authService.decToken;
 
@@ -118,7 +174,7 @@ export class AddBoardComponent {
       }
     };
 
-    this.onAddBoard.emit({ board: formData, columns: layoutData });
-    this.dialogRef.close();
+    // this.onAddBoard.emit({ board: formData, columns: layoutData });
+    // this.dialogRef.close();
   }
 }

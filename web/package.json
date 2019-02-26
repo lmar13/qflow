@@ -46,6 +46,7 @@
     "@nebular/security": "3.2.1",
     "@nebular/theme": "^3.2.1",
     "@ng-bootstrap/ng-bootstrap": "^4.0.0",
+    "@ng-select/ng-select": "^2.15.3",
     "@swimlane/ngx-charts": "^10.0.0",
     "angular-sortablejs": "^2.6.0",
     "angular2-chartjs": "^0.5.1",
@@ -79,7 +80,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.12.1",
     "@angular/cli": "^7.0.3",
-    "@angular/compiler-cli": "^7.2.5",
+    "@angular/compiler-cli": "^7.2.6",
     "@angular/language-service": "7.0.0",
     "@compodoc/compodoc": "^1.1.8",
     "@types/d3-color": "1.0.5",

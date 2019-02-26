@@ -1,7 +1,11 @@
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NbDatepickerModule, NbDialogModule } from "@nebular/theme";
+import {
+  NbDatepickerModule,
+  NbDialogModule,
+  NbBadgeModule
+} from "@nebular/theme";
 // import { WebSocketService } from "../../@core/data/ws.service";
 import { SortablejsModule } from "angular-sortablejs";
 import { Ng2SmartTableModule } from "ng2-smart-table";
@@ -12,6 +16,7 @@ import { AddBoardComponent } from "./boards/add-board/add-board.component";
 import { BoardComponent } from "./boards/board/board.component";
 import { EditBoardComponent } from "./boards/edit-board/edit-board.component";
 import { AddCardComponent } from "./cards/add-card/add-card.component";
+import { CardFilterComponent } from "./cards/card-filter/card-filter.component";
 import { CardComponent } from "./cards/card/card.component";
 import { EditCardComponent } from "./cards/edit-card/edit-card.component";
 import { ColumnComponent } from "./columns/column/column.component";
@@ -19,7 +24,7 @@ import { ListComponent } from "./list/list.component";
 import { PMRoutingModule } from "./pm-routing.module";
 import { PMComponent } from "./pm.component";
 import { SubboardComponent } from "./subboard/subboard.component";
-import { CardFilterComponent } from "./cards/card-filter/card-filter.component";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 const PM_COMPONENTS = [
   PMComponent,
@@ -49,7 +54,9 @@ const PM_COMPONENTS = [
     NbDatepickerModule,
     TagInputModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule,
+    NbBadgeModule
   ],
   declarations: [...PM_COMPONENTS],
   providers: [

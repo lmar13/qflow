@@ -24,20 +24,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: "Project Manager",
     icon: "nb-tables",
-    children: [
-      {
-        title: "Create",
-        link: "/pages/pm/create"
-      },
-      {
-        title: "All projects",
-        link: "/pages/pm"
-      },
-      {
-        title: "My projects",
-        link: "/pages/pm/user"
-      }
-    ]
+    link: "/pages/pm/user"
+    // children: [
+    //   {
+    //     title: "Create",
+    //     link: "/pages/pm/create"
+    //   },
+    //   {
+    //     title: "All projects",
+    //     link: "/pages/pm"
+    //   },
+    //   {
+    //     title: "My projects",
+    //     link: "/pages/pm/user"
+    //   }
+    // ]
   },
   {
     title: "FEATURES",

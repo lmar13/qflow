@@ -13,6 +13,7 @@ module.exports = function (app) {
     ));
   });
 
+  // Edit user
   app.put('/users/:id', auth.required, (req, res) => {
     User.findById(req.params.id, (err, user) => {
       if (err) {

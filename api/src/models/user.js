@@ -12,6 +12,9 @@ const userSchema = mongoose.Schema({
   role: String,
   hash: String,
   salt: String,
+  skills: [String],
+  groupId: [String],
+  workspaceId: [String],
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   isVerified: {
