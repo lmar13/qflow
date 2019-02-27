@@ -82,12 +82,12 @@
                       <td>{{ i + 1 }}</td>
                       <ng-container [formGroupName]="i">
                         <td>
-                          <ng-select formControlName="skillName" [items]="skills" bindLabel="Skill" bindValue="Skill"
+                          <ng-select formControlName="skillName" [items]="skills" [selectOnTab]="true" bindLabel="name"
                             appendTo="body" (change)="getUsersForSkill($event)"></ng-select>
                         </td>
                         <td>
                           <div style="width:100%; resize: none;">
-                            <ng-select formControlName="assignedUsers" [items]="usersForSkills" bindLabel="EmailID"
+                            <ng-select formControlName="assignedUsers" [items]="usersForSkills" [selectOnTab]="true" bindLabel="email"
                               appendTo="body">
                               <ng-template ng-header-tmp>
                                 <div style="width: 40px; display: inline-block; font-weight: bold;">Cards</div>
@@ -98,7 +98,7 @@
                                   class="badge badge-pill"
                                   [ngClass]="{'badge-success': item.cards <= 5, 'badge-danger': !(item.cards <= 5)}"
                                 >{{item.cards}}</span></div>
-                                <div style="display:inline-block;">{{item.EmailID}}</div>
+                                <div style="display:inline-block;">{{item.email}}</div>
                               </ng-template>
                             </ng-select>
                           </div>
@@ -215,12 +215,9 @@
                 <td>
                   <ul style="list-style-type: none;">
                     <li *ngFor="let user of skillForm.controls['fields'].value">
-                      {{ user?.skillName }} : {{ user.assignedUsers?.EmailID }}
+                      {{ user?.skillName.name }} : {{ user?.assignedUsers.email }}
                     </li>
                   </ul>
-                  <!-- <ng-container *ngFor="let user of skillForm.controls['fields'].value">
-                    {{ user.skillName }} : {{ user.assignedUsers.EmailID }},
-                  </ng-container> -->
                 </td>
               </tr>
             </tbody>

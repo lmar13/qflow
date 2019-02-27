@@ -15,10 +15,14 @@ const boardSchema = mongoose.Schema({
   planDate: Date,
   dueDate: Date,
   assignedUsers: [{
-    value: String,
-    display: String,
-    readonly: Boolean,
+    _id: String,
+    email: String,
   }],
+  assignedSkills: [{
+    _id: String,
+    name: String,
+    userId: [String]
+  }]
 });
 
 console.log('exporting Schema');

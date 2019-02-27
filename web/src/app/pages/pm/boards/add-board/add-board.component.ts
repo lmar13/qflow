@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { Validators, FormGroup, FormBuilder, FormArray } from "@angular/forms";
 import { NbDialogService } from "@nebular/theme";
-import { User, Board, AutoCompleteTag, Column } from "../../../../@core/model";
+import { User, Board, AutoCompleteTag, Column, Skill } from "../../../../@core/model";
 import { UserService } from "../../../../@core/data/users.service";
 import { AuthService } from "../../../../@core/auth/shared/auth.service";
 import { BoardService } from "../../../../@core/data/board.service";
@@ -36,8 +36,8 @@ export class AddBoardComponent {
   skillForm: FormGroup;
   dialogRef: any;
   skills: any;
-  usersForSkills = [];
-  usersForSkillsContainer = [];
+  usersForSkills = [] as User[];
+  // usersForSkillsContainer = [] as User[];
   selectedSkills = [];
 
   date = new Date();
@@ -53,11 +53,9 @@ export class AddBoardComponent {
     private boardService: BoardService,
     private skillsService: SkillsService
   ) {
-    this.skillsService.get().subscribe(skills => (this.skills = skills));
-    this.skillsService.getUsersForSkills().subscribe(users => {
-      console.log(users);
-      this.usersForSkillsContainer = users;
-    });
+    this.skillsService.get().subscribe(skills => this.skills = skills);
+    // this.skillsService.getUsersForSkills().subscribe(users =>
+    //   this.usersForSkillsContainer = users);
   }
 
   private createForm() {
@@ -140,29 +138,30 @@ export class AddBoardComponent {
     control.removeAt(control.length - 1);
   }
 
-  getUsersForSkill(item) {
-    console.log(item);
-    if (!item) {
-      item = {
-        Skill: ""
-      };
+  getUsersForSkill(skill: Skill) {
+    console.log(skill);
+    if(!skill){
+      this.usersForSkills = [];
     }
-    this.usersForSkills = this.usersForSkillsContainer.filter(
-      user => user.TechnicalSkill === item.Skill
-    );
+    else {
+      this.skillsService.getUsersBySkill(skill._id).subscribe(users =>
+        this.usersForSkills = users);
+    }
+
   }
 
   submit() {
-    let formData: Board = this.form.value;
+    let formData = this.form.value;
     let layoutData: Column = this.layoutForm.controls["fields"].value.map(
       col => col.colName
     );
-    // let skillData: any = this.skillForm.controls['fields'].value.map(record => ({
-    //   skillName: record.skillName,
+    let skillData: any = this.skillForm.controls['fields'].value;
 
-    // }));
+    const skillObj = _.groupBy(skillData, "skillName._id");
+    const userObj = _.groupBy(skillData, "assignedUsers._id");
 
-    // console.log(skillData);
+    const skillKeyArray = Object.keys(skillObj);
+    const userKeyArray = Object.keys(userObj);
 
     const { _id, email } = this.authService.decToken;
 
@@ -171,10 +170,21 @@ export class AddBoardComponent {
       owner: {
         _id,
         email
-      }
+      },
+      assignedUsers: userKeyArray.map(key => ({
+      _id: userObj[key][0].assignedUsers._id,
+      email: userObj[key][0].assignedUsers.email
+    })),
+      assignedSkills: skillKeyArray.map(key => ({
+        _id: skillObj[key][0].skillName._id,
+        name: skillObj[key][0].skillName.name,
+        userId: skillObj[key].map(data => data.assignedUsers._id)
+      })),
     };
 
-    // this.onAddBoard.emit({ board: formData, columns: layoutData });
-    // this.dialogRef.close();
+    console.log(formData);
+
+    this.onAddBoard.emit({ board: formData, columns: layoutData });
+    this.dialogRef.close();
   }
 }

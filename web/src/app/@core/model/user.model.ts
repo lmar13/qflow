@@ -5,4 +5,9 @@ export interface User {
   email: string;
   empId: number,
   role: 'admin' | 'user' | 'guest',
+  skills: {
+    _id: string;
+    name: string;
+  }
+  cards: number;
 }

@@ -12,9 +12,8 @@ const cardSchema = mongoose.Schema({
     email: String,
   },
   assignedUsers: [{
-    value: String,
-    display: String,
-    readonly: Boolean,
+    _id: String,
+    name: String,
   }],
   startDate: Date,
   endDate: Date,

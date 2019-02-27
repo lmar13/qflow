@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { EnvironmentProviderService } from "./environment-provider.service";
 import { catchError, map } from "rxjs/operators";
+import { Skill, User } from "../model";
 
 @Injectable({
   providedIn: "root"
@@ -17,16 +18,15 @@ export class SkillsService {
     this.baseUrl = envProvider.current.apiBaseUri;
   }
 
-  get(): Observable<any> {
-    return this.httpClient.get(`${this.baseUrl}/skills`);
+  get(): Observable<Skill[]> {
+    return this.httpClient.get<Skill[]>(`${this.baseUrl}/skills`);
   }
 
-  getUsersForSkills(): Observable<any> {
-    return this.httpClient.get(`${this.baseUrl}/usersForSkills`);
+  getUsersForSkills(): Observable<User[]> {
+    return this.httpClient.get<User[]>(`${this.baseUrl}/usersForSkills`);
   }
 
-  getByName(skillName: string): Observable<any> {
-    console.log(skillName);
-    return this.httpClient.get(`${this.baseUrl}/usersForSkills/${skillName}`);
+  getUsersBySkill(skillId: string): Observable<User[]> {
+    return this.httpClient.get<User[]>(`${this.baseUrl}/usersForSkills/${skillId}`);
   }
 }

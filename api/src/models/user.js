@@ -12,7 +12,10 @@ const userSchema = mongoose.Schema({
   role: String,
   hash: String,
   salt: String,
-  skills: [String],
+  skills: [{
+    _id: String,
+    name: String,
+  }],
   groupId: [String],
   workspaceId: [String],
   resetPasswordToken: String,

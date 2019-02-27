@@ -4,70 +4,62 @@ const auth = require('./../auth-config/auth');
 const sql = require('mssql');
 const Card = require('./../models/card');
 const Skill = require('./../models/skill');
+const User = require('./../models/user');
 
 module.exports = (app) => {
   app.get('/skills', auth.required, (req, res) => {
     log('GET /skills');
-    const request = new sql.Request();
-    request.query(`select [Skill],
-                          [Type],
-                          [Category] 
-                  from [ResearchBriefs].[dbo].[SkillReference]`)
-      .then(data => res.status(200).json(data.recordset))
-      .catch(err => res.status(400).json({
-        error: err
-      }));
+    Skill.find().exec((err, data) => res.status(200).json(data))
   });
 
   app.get('/usersForSkills', auth.required, (req, res) => {
-    const skillName = req.params.skillName;
-    const request = new sql.Request();
-    request.query(`select distinct 
-                      TS.[EmployeeID], 
-                      TS.[TechnicalSkill],
-                      UP.[EmailID],
-                      UP.[EmployeeName]
-                  from [ResearchBriefs].[dbo].[Technical_Skill] as TS
-                  join [ResearchBriefs].[dbo].[UserProfile] as UP
-                      on TS.[EmployeeID] = UP.[EmployeeID] `)
-      .then(data => {
-        const mockArray = [
-          // 'test@example.com',
-          'admin@example.com'
-        ]
+    User.find()
+      .exec((err, data) => {
         Card.aggregate([{
           $match: {
-            'assignedUsers.display': {
-              // $in: data.recordset.map(user => user.EmailID)
-              $in: mockArray
+            'assignedUsers._id': {
+              $in: data.map(user => user._id)
             }
           }
         }]).exec((err, result) => {
-          return res.status(200).json(data.recordset.map(data => ({
-            ...data,
+          return res.status(200).json(data.map(d => ({
+            ...d._doc,
             cards: result.length,
           })));
         });
-      })
-      .catch(err => res.status(400).json({
-        error: err
-      }));
-
+      });
   });
 
-  app.get('/usersForSkills/:skillName', auth.required, (req, res) => {
-    const skillName = req.params.skillName;
-    const request = new sql.Request();
-    request.query(`select TS.[EmployeeID],
-                          UP.[EmailID]
-                  from [ResearchBriefs].[dbo].[Technical_Skill] as TS
-                  join [ResearchBriefs].[dbo].[UserProfile] as UP
-                        on TS.[EmployeeID] = UP.[EmployeeID] 
-                  where TechnicalSkill = '${skillName}'`)
-      .then(data => res.status(200).json(data.recordset))
-      .catch(err => res.status(400).json({
-        error: err
-      }));
-
+  app.get('/usersForSkills/:skillId', auth.required, (req, res) => {
+    User.find({'skills._id': req.params.skillId})
+      .exec((err, users) => {
+        Card.aggregate([
+          {$project: { _id: 0, assignedUsers: 1 } },
+          {$unwind: "$assignedUsers" },
+          {$group: { _id: "$assignedUsers", cards: { $sum: 1 } }},
+          {$project: { _id: 0,assignedUsers: "$_id", cards: 1 } },
+        ]).exec((err, cards) =>  
+          res.status(200).json(users.map(user => {
+            const cardsCount = cards.filter(card => card.assignedUsers._id == user._id)[0]
+            return {
+              ...user._doc,
+              cards: cardsCount ? cardsCount.cards : 0
+            }
+          }))
+        );
+      });
   });
+
+  app.get('/usersForSkillsCardCount', auth.required, (req, res) => {
+    Card.aggregate([
+        {$project: { _id: 0, assignedUsers: 1 } },
+        {$unwind: "$assignedUsers" },
+        {$group: { _id: "$assignedUsers", cards: { $sum: 1 } }},
+        {$project: { _id: 0,assignedUsers: "$_id", cards: 1 } },
+      ]).exec((err, result) => res.status(200).json(result.map(r => ({
+        userId: r.assignedUsers._id,
+        cards: result.cards 
+      }))));
+  })
+
 }

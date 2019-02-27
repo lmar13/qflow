@@ -17,9 +17,10 @@
 
   </nb-card-body>
 </nb-card>
-<ng2-smart-table
+<div style="width: 100%; overflow: auto;"><ng2-smart-table
   [settings]="settings"
   [source]="source"
   (deleteConfirm)="onDeleteConfirm($event)"
   (editConfirm)="onEditConfirm($event)"
-></ng2-smart-table>
+></ng2-smart-table></div>
+

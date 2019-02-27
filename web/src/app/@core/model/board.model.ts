@@ -11,5 +11,15 @@ export interface Board {
   };
   startDate: Date;
   endDate: Date;
-  assignedUsers: AutoCompleteTag[];
+  planDate: Date,
+  dueDate: Date,
+  assignedUsers: {
+    _id: string;
+    email: string;
+  },
+  assignedSkills: {
+    _id: string;
+    name: string;
+    userId: string;
+  }
 }
