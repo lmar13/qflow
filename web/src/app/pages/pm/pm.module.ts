@@ -1,11 +1,8 @@
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import {
-  NbDatepickerModule,
-  NbDialogModule,
-  NbBadgeModule
-} from "@nebular/theme";
+import { NbDatepickerModule, NbDialogModule, NbTabsetModule } from "@nebular/theme";
+import { NgSelectModule } from "@ng-select/ng-select";
 // import { WebSocketService } from "../../@core/data/ws.service";
 import { SortablejsModule } from "angular-sortablejs";
 import { Ng2SmartTableModule } from "ng2-smart-table";
@@ -24,7 +21,6 @@ import { ListComponent } from "./list/list.component";
 import { PMRoutingModule } from "./pm-routing.module";
 import { PMComponent } from "./pm.component";
 import { SubboardComponent } from "./subboard/subboard.component";
-import { NgSelectModule } from "@ng-select/ng-select";
 
 const PM_COMPONENTS = [
   PMComponent,
@@ -56,7 +52,7 @@ const PM_COMPONENTS = [
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    NbBadgeModule
+    NbTabsetModule,
   ],
   declarations: [...PM_COMPONENTS],
   providers: [

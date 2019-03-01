@@ -12,7 +12,6 @@ import { User, Board, AutoCompleteTag, Column, Skill } from "../../../../@core/m
 import { UserService } from "../../../../@core/data/users.service";
 import { AuthService } from "../../../../@core/auth/shared/auth.service";
 import { BoardService } from "../../../../@core/data/board.service";
-import { query } from "@angular/core/src/render3";
 import { SkillsService } from "../../../../@core/data/skills.service";
 import * as _ from "lodash";
 
@@ -28,8 +27,6 @@ export class AddBoardComponent {
 
   @Output() onEditBoard = new EventEmitter<Board>();
   @Output() onAddBoard = new EventEmitter<Object>();
-
-  requestAutocompleteItems: AutoCompleteTag[] = [];
 
   form: FormGroup;
   layoutForm: FormGroup;
@@ -86,26 +83,26 @@ export class AddBoardComponent {
     });
   }
 
-  initColumnFields(col = "") {
+  private initColumnFields(col = "") {
     return this.fb.group({
       colName: [col, Validators.required]
     });
   }
 
-  initSkillFields(skill = "") {
+  private initSkillFields(skill = "") {
     return this.fb.group({
       skillName: [skill, Validators.required],
       assignedUsers: ["", Validators.required]
     });
   }
 
-  private getDefaultData() {
-    this.requestAutocompleteItems = this.users.map(user => ({
-      value: user._id,
-      display: user.email,
-      readonly: false
-    }));
-  }
+  // private getDefaultData() {
+  //   this.requestAutocompleteItems = this.users.map(user => ({
+  //     value: user._id,
+  //     display: user.email,
+  //     readonly: false
+  //   }));
+  // }
 
   open(dialog: TemplateRef<any>) {
     this.dialogRef = this.dialogService.open(dialog, {
@@ -113,7 +110,7 @@ export class AddBoardComponent {
       closeOnEsc: false
     });
     // if(this.board) {
-    this.getDefaultData();
+    // this.getDefaultData();
     this.createForm();
     // }
   }
@@ -172,9 +169,9 @@ export class AddBoardComponent {
         email
       },
       assignedUsers: userKeyArray.map(key => ({
-      _id: userObj[key][0].assignedUsers._id,
-      email: userObj[key][0].assignedUsers.email
-    })),
+        _id: userObj[key][0].assignedUsers._id,
+        email: userObj[key][0].assignedUsers.email
+      })),
       assignedSkills: skillKeyArray.map(key => ({
         _id: skillObj[key][0].skillName._id,
         name: skillObj[key][0].skillName.name,

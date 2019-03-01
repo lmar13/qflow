@@ -8,6 +8,23 @@ nb-card-footer {
   }
 }
 
+ng-select {
+  width: 100%;
+
+  /deep/ .ng-select-container {
+    background: transparent;
+    border: 2px solid #342e73;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    padding: 0.75rem 1.125rem;
+    height: 41px !important;
+  }
+
+  /deep/ .ng-value {
+    color: #999999;
+  }
+}
+
 i {
   font-weight: bold;
   font-size: 28px;

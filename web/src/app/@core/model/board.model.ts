@@ -13,13 +13,13 @@ export interface Board {
   endDate: Date;
   planDate: Date,
   dueDate: Date,
-  assignedUsers: {
+  assignedUsers: [{
     _id: string;
     email: string;
-  },
-  assignedSkills: {
+  }],
+  assignedSkills: [{
     _id: string;
     name: string;
-    userId: string;
-  }
+    userId: string[];
+  }]
 }
