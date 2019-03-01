@@ -1,5 +1,3 @@
-import { AutoCompleteTag } from "./auto-complete-tag.model";
-
 export interface Card {
   _id: string;
   title: string;

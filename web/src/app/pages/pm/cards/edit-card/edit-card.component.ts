@@ -1,20 +1,13 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-  TemplateRef
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnDestroy, Output, TemplateRef } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NbDialogService } from "@nebular/theme";
+import { SortablejsOptions } from "angular-sortablejs";
 import { Subscription } from "rxjs";
+import { AuthService } from "../../../../@core/auth/shared/auth.service";
 import { CardService } from "../../../../@core/data/card.service";
 import { ColumnService } from "../../../../@core/data/column.service";
-import { Card, User, Column, AutoCompleteTag } from "../../../../@core/model";
 import { UserService } from "../../../../@core/data/users.service";
-import { AuthService } from "../../../../@core/auth/shared/auth.service";
-import { SortablejsOptions } from "angular-sortablejs";
+import { Card, Column, User } from "../../../../@core/model";
 
 @Component({
   selector: "ngx-edit-card",
@@ -32,7 +25,6 @@ export class EditCardComponent implements OnDestroy {
   title = "Edit card";
   selectedCard: string;
   // columns = [] as Column[];
-  requestAutocompleteItems: AutoCompleteTag[] = [];
 
   options: SortablejsOptions = {
     group: "board",

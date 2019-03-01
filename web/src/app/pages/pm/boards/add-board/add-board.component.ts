@@ -1,19 +1,12 @@
-import {
-  Component,
-  OnInit,
-  TemplateRef,
-  Input,
-  Output,
-  EventEmitter
-} from "@angular/core";
-import { Validators, FormGroup, FormBuilder, FormArray } from "@angular/forms";
+import { Component, EventEmitter, Input, Output, TemplateRef } from "@angular/core";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NbDialogService } from "@nebular/theme";
-import { User, Board, AutoCompleteTag, Column, Skill } from "../../../../@core/model";
-import { UserService } from "../../../../@core/data/users.service";
+import * as _ from "lodash";
 import { AuthService } from "../../../../@core/auth/shared/auth.service";
 import { BoardService } from "../../../../@core/data/board.service";
 import { SkillsService } from "../../../../@core/data/skills.service";
-import * as _ from "lodash";
+import { UserService } from "../../../../@core/data/users.service";
+import { Board, Column, Skill, User } from "../../../../@core/model";
 
 @Component({
   selector: "ngx-add-board",
@@ -58,15 +51,9 @@ export class AddBoardComponent {
   private createForm() {
     const { email, _id } = this.authService.decToken;
 
-    const readOnlyUser = {
-      value: _id,
-      display: email,
-      readonly: true
-    } as AutoCompleteTag;
-
     this.form = this.fb.group({
       title: ["", Validators.required],
-      assignedUsers: [[readOnlyUser], Validators.required],
+      assignedUsers: ["", Validators.required],
       owner: [email],
       startDate: [new Date(Date.now()), Validators.required],
       endDate: [new Date(Date.now()), Validators.required]
@@ -96,23 +83,12 @@ export class AddBoardComponent {
     });
   }
 
-  // private getDefaultData() {
-  //   this.requestAutocompleteItems = this.users.map(user => ({
-  //     value: user._id,
-  //     display: user.email,
-  //     readonly: false
-  //   }));
-  // }
-
   open(dialog: TemplateRef<any>) {
     this.dialogRef = this.dialogService.open(dialog, {
       closeOnBackdropClick: false,
       closeOnEsc: false
     });
-    // if(this.board) {
-    // this.getDefaultData();
     this.createForm();
-    // }
   }
 
   addColumnField() {

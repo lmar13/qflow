@@ -1,26 +1,12 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnDestroy,
-  TemplateRef,
-  Output,
-  EventEmitter
-} from "@angular/core";
-import {
-  FormGroup,
-  Validators,
-  FormBuilder,
-  FormControl,
-  FormArray
-} from "@angular/forms";
+import { Component, EventEmitter, Input, Output, TemplateRef } from "@angular/core";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NbDialogService } from "@nebular/theme";
-import { User, Board, AutoCompleteTag, Skill } from "../../../../@core/model";
-import { UserService } from "../../../../@core/data/users.service";
+import * as _ from "lodash";
 import { AuthService } from "../../../../@core/auth/shared/auth.service";
 import { BoardService } from "../../../../@core/data/board.service";
-import * as _ from "lodash";
 import { SkillsService } from "../../../../@core/data/skills.service";
+import { UserService } from "../../../../@core/data/users.service";
+import { Board, Skill, User } from "../../../../@core/model";
 
 @Component({
   selector: "ngx-edit-board",
@@ -34,8 +20,6 @@ export class EditBoardComponent {
 
   @Output() onEditBoard = new EventEmitter<Board>();
   @Output() onAddBoard = new EventEmitter<Board>();
-
-  requestAutocompleteItems: AutoCompleteTag[] = [];
 
   form: FormGroup;
   skillForm: FormGroup;

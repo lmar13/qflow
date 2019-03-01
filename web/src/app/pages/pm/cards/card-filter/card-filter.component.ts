@@ -1,16 +1,9 @@
-import {
-  Component,
-  OnInit,
-  TemplateRef,
-  EventEmitter,
-  Output
-} from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { NbDialogService } from "@nebular/theme";
 import { AuthService } from "../../../../@core/auth/shared/auth.service";
 import { UserService } from "../../../../@core/data/users.service";
-import { User, CardFilter, AutoCompleteTag } from "../../../../@core/model";
-import { __core_private_testing_placeholder__ } from "@angular/core/testing";
+import { CardFilter, User } from "../../../../@core/model";
 
 @Component({
   selector: "ngx-card-filter",

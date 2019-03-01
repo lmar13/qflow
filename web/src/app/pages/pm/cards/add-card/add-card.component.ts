@@ -1,18 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-  TemplateRef
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnDestroy, Output, TemplateRef } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NbDialogService } from "@nebular/theme";
 import { Subscription } from "rxjs";
-import { User, Column, Card, AutoCompleteTag } from "../../../../@core/model";
+import { AuthService } from "../../../../@core/auth/shared/auth.service";
 import { ColumnService } from "../../../../@core/data/column.service";
 import { UserService } from "../../../../@core/data/users.service";
-import { AuthService } from "../../../../@core/auth/shared/auth.service";
+import { Card, Column, User } from "../../../../@core/model";
 
 @Component({
   selector: "ngx-add-card",
@@ -51,12 +44,6 @@ export class AddCardComponent implements OnDestroy {
 
   private createForm() {
     const { email, _id } = this.authService.decToken;
-
-    const readOnlyUser = {
-      value: _id,
-      display: email,
-      readonly: true
-    } as AutoCompleteTag;
 
     this.form = this.fb.group({
       title: ["", Validators.required],

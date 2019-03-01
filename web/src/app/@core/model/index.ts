@@ -1,4 +1,3 @@
-export * from "./auto-complete-tag.model";
 export * from "./board.model";
 export * from "./card.model";
 export * from "./cardFilter.model";
