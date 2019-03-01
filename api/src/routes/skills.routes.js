@@ -14,19 +14,21 @@ module.exports = (app) => {
 
   app.get('/usersForSkills', auth.required, (req, res) => {
     User.find()
-      .exec((err, data) => {
-        Card.aggregate([{
-          $match: {
-            'assignedUsers._id': {
-              $in: data.map(user => user._id)
+      .exec((err, users) => {
+        Card.aggregate([
+          {$project: { _id: 0, assignedUsers: 1 } },
+          {$unwind: "$assignedUsers" },
+          {$group: { _id: "$assignedUsers", cards: { $sum: 1 } }},
+          {$project: { _id: 0,assignedUsers: "$_id", cards: 1 } },
+        ]).exec((err, cards) =>  
+          res.status(200).json(users.map(user => {
+            const cardsCount = cards.filter(card => card.assignedUsers._id == user._id)[0]
+            return {
+              ...user._doc,
+              cards: cardsCount ? cardsCount.cards : 0
             }
-          }
-        }]).exec((err, result) => {
-          return res.status(200).json(data.map(d => ({
-            ...d._doc,
-            cards: result.length,
-          })));
-        });
+          }))
+        );
       });
   });
 
@@ -61,5 +63,33 @@ module.exports = (app) => {
         cards: result.cards 
       }))));
   })
+
+  app.post('/skill', auth.required, (req, res) => {
+    log('POST /skill', req.body);
+    const newSkill = new Skill(req.body);
+    newSkill.save((err, newSkill) => err ? res.json({
+      info: 'error during board create',
+      error: err
+    }) : res.json(newSkill));
+  });
+
+  app.put('/skill/:id', auth.required, (req, res) => {
+    log('PUT /skill/:id');
+    Skill.replaceOne({
+      _id: req.params.id
+    }, req.body, (err) => err ? res.status(404).json({
+      info: 'error during updating board',
+      error: err
+    }) : res.status(200).json(req.body));
+  });
+
+  app.delete('/skill/:id', auth.required, (req, res) => {
+    Skill.findByIdAndRemove(req.params.id, (err) => err ? res.json({
+      info: 'error during remove board',
+      error: err
+    }) : res.status(200).json({
+      info: 'board removed successfully'
+    }))
+  });
 
 }

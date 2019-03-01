@@ -6,6 +6,7 @@ import { TagInputModule } from 'ngx-chips';
 import { ThemeModule } from "../../@theme/theme.module";
 import { AdminRoutingModule } from "./admin-routing.module";
 import { UserListComponent } from './user-list/user-list.component';
+import { SkillListComponent } from './skill-list/skill-list.component';
 
 
 const ADMIN_COMPONENTS = [
@@ -24,7 +25,8 @@ const ADMIN_COMPONENTS = [
   ],
   declarations: [
     ...ADMIN_COMPONENTS,
-    UserListComponent
+    UserListComponent,
+    SkillListComponent
   ],
   providers: [
   ]

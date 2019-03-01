@@ -1,3 +1,4 @@
+import { SkillListComponent } from './skill-list/skill-list.component';
 import { AdminComponent } from './admin.component';
 import { Routes, RouterModule } from "@angular/router";
 
@@ -11,6 +12,10 @@ const routes: Routes = [{
     {
       path: 'users',
       component: UserListComponent,
+    },
+    {
+      path: 'skills',
+      component: SkillListComponent
     }
   ]
 }];

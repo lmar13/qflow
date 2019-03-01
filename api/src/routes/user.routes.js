@@ -13,6 +13,16 @@ module.exports = function (app) {
     ));
   });
 
+  app.get('/users/:userId', auth.required, (req, res) => {
+    User.findById(req.params.userId).exec((err, users) => (
+      err ? res.status(404).json({
+        error: 'Cannot get users'
+      }) : users ? res.status(200).json(users) : res.status(404).json({
+        info: 'Cannot find any users'
+      })
+    ));
+  });
+
   // Edit user
   app.put('/users/:id', auth.required, (req, res) => {
     User.findById(req.params.id, (err, user) => {

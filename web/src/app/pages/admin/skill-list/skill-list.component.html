@@ -1,0 +1,11 @@
+<!-- <h5>Skills</h5> -->
+<div style="width: 100%; overflow: auto;">
+  <ng2-smart-table
+    [settings]="settings"
+    [source]="source"
+    (deleteConfirm)="onDeleteConfirm($event)"
+    (editConfirm)="onEditConfirm($event)"
+    (createConfirm)="onCreateConfirm($event)"
+  ></ng2-smart-table>
+</div>
+

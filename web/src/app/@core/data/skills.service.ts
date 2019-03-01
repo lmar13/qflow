@@ -29,4 +29,26 @@ export class SkillsService {
   getUsersBySkill(skillId: string): Observable<User[]> {
     return this.httpClient.get<User[]>(`${this.baseUrl}/usersForSkills/${skillId}`);
   }
+
+  addSkill(skill: string): Observable<Skill> {
+    return this.httpClient.post<Skill>(`${this.baseUrl}/skill`, skill).pipe(
+      catchError(err => {
+        throw err;
+      }),
+      map(value => value as Skill)
+    );
+  }
+
+  updateSkillById(skill: Skill): Observable<Skill> {
+    return this.httpClient.put<Skill>(`${this.baseUrl}/skill/${skill._id}`, skill).pipe(
+      catchError(err => {
+        throw err;
+      }),
+      map(value => value as Skill)
+    );
+  }
+
+  deleteSkillById(skill: Skill): Observable<Skill> {
+    return this.httpClient.delete<Skill>(`${this.baseUrl}/skill/${skill._id}`);
+  }
 }
