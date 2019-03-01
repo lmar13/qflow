@@ -13,7 +13,7 @@ const cardSchema = mongoose.Schema({
   },
   assignedUsers: [{
     _id: String,
-    name: String,
+    email: String,
   }],
   startDate: Date,
   endDate: Date,

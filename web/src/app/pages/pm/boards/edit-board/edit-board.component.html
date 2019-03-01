@@ -7,7 +7,7 @@
       <nb-card-body>
         <ng-container *ngIf="board">
           <nb-tabset>
-            <nb-tab tabTitle="Details" style="padding-top: 20px;" [badgeText]="form.valid ? '' : '!'" badgeStatus="danger" >
+            <nb-tab tabTitle="Details" [badgeText]="form.valid ? '' : '!'" badgeStatus="danger" >
               <div class="col">
                 <form [formGroup]="form">
                   <div class="form-group">
@@ -36,7 +36,7 @@
                 </form>
               </div>
             </nb-tab>
-            <nb-tab tabTitle="Skills" style="padding-top: 20px;" [badgeText]="skillForm.valid ? '' : '!'" badgeStatus="danger">
+            <nb-tab tabTitle="Skills" [badgeText]="skillForm.valid ? '' : '!'" badgeStatus="danger">
               <div class="col">
                 <form [formGroup]="skillForm">
                   <div class="form-group" style="margin-top: 10px;">

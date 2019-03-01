@@ -12,7 +12,10 @@ export interface Card {
     _id: string;
     email: string;
   };
-  assignedUsers: AutoCompleteTag[];
+  assignedUsers: [{
+    _id: string;
+    email: string;
+  }],
   startDate: Date;
   endDate: Date;
 }

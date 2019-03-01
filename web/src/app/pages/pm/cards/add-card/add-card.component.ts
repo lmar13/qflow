@@ -28,7 +28,6 @@ export class AddCardComponent implements OnDestroy {
 
   title = "Add new card";
   // columns = [] as Column[];
-  requestAutocompleteItems: AutoCompleteTag[] = [];
 
   form: FormGroup;
   dialogRef: any;
@@ -63,28 +62,11 @@ export class AddCardComponent implements OnDestroy {
       title: ["", Validators.required],
       content: [""],
       columnId: ["", Validators.required],
-      assignedUsers: [[readOnlyUser], Validators.required],
+      assignedUsers: ["", Validators.required],
       owner: [""],
       startDate: [new Date(Date.now()), Validators.required],
       endDate: [new Date(Date.now()), Validators.required]
     });
-  }
-
-  private getDefaultData() {
-    // this.columnService.getAll().subscribe(columns => this.columns = columns);
-    // this.userService.getUsers().subscribe(users => {
-    this.requestAutocompleteItems =
-      this.users
-        .filter(user => user._id !== this.authService.decToken._id)
-        .map(
-          user =>
-            ({
-              value: user._id,
-              display: user.email,
-              readonly: false
-            } as AutoCompleteTag)
-        ) || [];
-    // });
   }
 
   open(dialog: TemplateRef<any>) {
@@ -92,7 +74,6 @@ export class AddCardComponent implements OnDestroy {
       closeOnBackdropClick: false,
       closeOnEsc: false
     });
-    this.getDefaultData();
     this.createForm();
   }
 

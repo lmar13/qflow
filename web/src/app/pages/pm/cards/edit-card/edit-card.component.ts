@@ -71,10 +71,7 @@ export class EditCardComponent implements OnDestroy {
       content: [this.card.content],
       columnId: ["", Validators.required],
       assignedUsers: [
-        this.card.assignedUsers.map(val => ({
-          ...val,
-          readonly: val.value === this.card.owner._id ? true : false
-        })),
+        this.card.assignedUsers,
         Validators.required
       ],
       owner: [this.card.owner.email],
@@ -95,11 +92,6 @@ export class EditCardComponent implements OnDestroy {
     );
 
     // this.userService.getUsers().subscribe(users => {
-    this.requestAutocompleteItems = this.users.map(user => ({
-      value: user._id,
-      display: user.email,
-      readonly: false
-    }));
     // });
   }
 
