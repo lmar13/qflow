@@ -10,4 +10,5 @@ export interface User {
     name: string;
   }
   cards: number;
+  isVerified: boolean;
 }

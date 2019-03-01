@@ -24,7 +24,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: "Project Manager",
     icon: "nb-tables",
-    link: "/pages/pm/user"
+    link: "/pages/pm"
     // children: [
     //   {
     //     title: "Create",
@@ -69,6 +69,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: "Users",
         link: "/pages/admin/users"
+      },
+      {
+        title: "Skills",
+        link: "/pages/admin/skills"
       }
     ]
   }

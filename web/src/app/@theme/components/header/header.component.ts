@@ -6,6 +6,7 @@ import { UserService } from '../../../@core/data/users.service';
 import { AnalyticsService } from '../../../@core/utils/analytics.service';
 import { filter, map } from 'rxjs/operators';
 import { User } from '../../../@core/model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -28,7 +29,8 @@ export class HeaderComponent implements OnInit {
               private userService: UserService,
               private authService: AuthService,
               private themeService: NbThemeService,
-              private analyticsService: AnalyticsService) {
+              private analyticsService: AnalyticsService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -40,7 +42,7 @@ export class HeaderComponent implements OnInit {
         filter(({ tag }) => tag === 'my-context-menu'),
         map(({item: { title }}) => title)
       )
-      .subscribe(title => title === 'Log out' ? this.authService.logout(): true);
+      .subscribe(title => title === 'Log out' ? this.authService.logout() : this.router.navigate(["/pages/user"]));
 
     this.themeService.onThemeChange().subscribe((theme: any) => this.whiteLogo = theme.name === 'default' ? false : true);
     // this.themeService.onThemeChange().subscribe((theme: any) => console.log(theme));

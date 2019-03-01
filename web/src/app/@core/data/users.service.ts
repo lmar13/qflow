@@ -1,5 +1,5 @@
 
-import { of as observableOf,  Observable } from 'rxjs';
+import { of as observableOf,  Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { EnvironmentProviderService } from './environment-provider.service';
 import { HttpClient } from '@angular/common/http';
@@ -22,4 +22,11 @@ export class UserService {
     return this.httpClient.get<User[]>(`${this.baseUrl}/users`);
   }
 
+  getUserById(userId: string): Observable<User> {
+    return this.httpClient.get<User>(`${this.baseUrl}/users/${userId}`)
+  }
+
+  updateUserById(user: User): Observable<User> {
+    return this.httpClient.put<User>(`${this.baseUrl}/users/${user._id}`, user);
+  }
 }

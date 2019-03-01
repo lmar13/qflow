@@ -1,3 +1,4 @@
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { UserIsAuthorizeGuard } from "./../@core/auth/shared/user-is-authorize.guard";
@@ -33,6 +34,10 @@ const routes: Routes = [
         path: "admin",
         loadChildren: "./admin/admin.module#AdminModule",
         canLoad: [UserIsAuthorizeGuard]
+      },
+      {
+        path: "user",
+        component: UserProfileComponent,
       },
       {
         path: "",

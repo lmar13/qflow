@@ -1,0 +1,129 @@
+<!-- <nb-layout>
+    <nb-layout-column> -->
+      <nb-card>
+        <nb-card-header>
+          <nav class="navigation">
+            <a href="#" (click)="back()" class="link" aria-label="Back">
+              <i class="icon nb-arrow-thin-left"></i>
+            </a>
+            <a routerLink="/" class="link" aria-label="Home" style="float: right;">
+                <i class="icon nb-home"></i>
+            </a>
+          </nav>
+        </nb-card-header>
+        <nb-card-body>
+          <nb-auth-block *ngIf="user">
+              <h1 id="title" class="title">User Profile</h1>
+
+              <form [formGroup]="form">
+                <div class="form-control-group row">
+                  <div class="col">
+                    <label class="label" for="input-name">Name:</label>
+                    <input nbInput
+                          formControlName="name"
+                          id="input-name"
+                          name="name"
+                          placeholder="Name"
+                          autofocus
+                          fullWidth
+                          [status]="form.controls['name'].dirty ? (form.controls['name'].invalid  ? 'danger' : 'success') : ''"
+                          [attr.aria-invalid]="form.controls['name'].invalid && form.controls['name'].dirty ? true : null">
+                    <ng-container *ngIf="form.controls['name'].invalid && form.controls['name'].dirty">
+                      <p class="error-message" *ngIf="form.controls['name'].hasError('required')">
+                        Name is required!
+                      </p>
+                    </ng-container>
+                  </div>
+                  <div class="col">
+                      <label class="label" for="input-surname">Surname:</label>
+                      <input nbInput
+                            formControlName="surname"
+                            id="input-surname"
+                            name="surname"
+                            placeholder="Surname"
+                            autofocus
+                            fullWidth
+                            [status]="form.controls['surname'].dirty ? (form.controls['surname'].invalid  ? 'danger' : 'success') : ''"
+                            [attr.aria-invalid]="form.controls['surname'].invalid && form.controls['surname'].dirty ? true : null">
+                      <ng-container *ngIf="form.controls['surname'].invalid && form.controls['surname'].dirty">
+                        <p class="error-message" *ngIf="form.controls['surname'].hasError('required')">
+                          Surname is required!
+                        </p>
+                      </ng-container>
+                    </div>
+                </div>
+
+                <div class="form-control-group">
+                  <label class="label" for="input-email">Email address:</label>
+                  <input nbInput
+                         formControlName="email"
+                         id="input-email"
+                         name="email"
+                         pattern=".+@.+..+"
+                         placeholder="Email address"
+                         fullWidth
+                         [status]="form.controls['email'].dirty ? ( form.controls['email'].invalid  ? 'danger' : 'success') : ''"
+                         [attr.aria-invalid]="form.controls['email'].invalid && form.controls['email'].dirty ? true : null">
+                  <ng-container *ngIf="form.controls['email'].invalid && form.controls['email'].dirty">
+                    <p class="error-message" *ngIf="form.controls['email'].hasError('required')">
+                      Email is required!
+                    </p>
+                    <p class="error-message" *ngIf="form.controls['email'].hasError('invalidEmail')">
+                      Email should be valid and registered in refinitiv.com domain
+                    </p>
+                  </ng-container>
+                </div>
+
+
+                <div class="form-control-group">
+                  <label class="label" for="input-empId">Employee ID:</label>
+                  <input nbInput
+                         formControlName="empId"
+                         id="input-empId"
+                         name="empId"
+                         placeholder="Employee ID"
+                         fullWidth
+                         [status]="form.controls['empId'].dirty ? ( form.controls['empId'].invalid  ? 'danger' : 'success') : ''"
+                         [attr.aria-invalid]="form.controls['empId'].invalid && form.controls['empId'].dirty ? true : null">
+                  <ng-container *ngIf="form.controls['empId'].invalid && form.controls['empId'].dirty">
+                    <p class="error-message" *ngIf="form.controls['empId'].hasError('required')">
+                      Employee ID is required!
+                    </p>
+                    <p class="error-message" *ngIf="form.controls['empId'].hasError('invalidEmpId')">
+                      Employee ID should be valid one!
+                    </p>
+                  </ng-container>
+                </div>
+
+                <div class="form-control-group">
+                    <label class="label" for="input-empId">Skills:</label>
+                    <ng-select
+                      formControlName="skills"
+                      [items]="skills"
+                      [multiple]="true"
+                      [closeOnSelect]="false"
+                      [hideSelected]="true"
+                      [clearOnBackspace]="false"
+                      bindLabel="name"
+                      appendTo="body"
+                    ></ng-select>
+                  </div>
+
+                <button nbButton
+                        fullWidth
+                        status="success"
+                        [disabled]="!form.valid"
+                        (click)="save()">
+                  Save
+                </button>
+              </form>
+          </nb-auth-block>
+        </nb-card-body>
+      </nb-card>
+    <!-- </nb-layout-column>
+  </nb-layout> -->
+
+
+
+
+
