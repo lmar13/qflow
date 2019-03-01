@@ -85,12 +85,12 @@ mongoose.connect(mongoUri, {
 });
 mongoose.set('useCreateIndex', true);
 
-const sql = require("mssql");
-const sqlConfig = require('./config/sql.config')
-sql.connect(sqlConfig, (err) => {
-  if (err) console.log('sql error', err.message);
-  else console.log('Sql connection established');
-});
+// const sql = require("mssql");
+// const sqlConfig = require('./config/sql.config')
+// sql.connect(sqlConfig, (err) => {
+//   if (err) console.log('sql error', err.message);
+//   else console.log('Sql connection established');
+// });
 
 const ws = require('./src/ws.js')(server, true);
 const workspaceAndGroupsRoutes = require('./src/routes/workspaceAndGroup.routes.js')(app);
