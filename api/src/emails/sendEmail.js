@@ -54,9 +54,9 @@ module.exports = (data) => {
         const htmlToSend = template(replacements);
 
         const mailOptions = {
-            from: 'TLA-no-replay@thomsonreuters.com',
-            to: 'lukasz.marciniak@thomsonreuters.com',
-            // to: req.body.email,
+            from: 'qflow-no-replay@thomsonreuters.com',
+            // to: 'lukasz.marciniak@thomsonreuters.com',
+            to: req.body.email,
             subject: confirm ? 'Account activation' : 'Password reset', // Subject line
             text: confirm ? `Hello,\n\n' + 'Please verify your account by clicking the link: \n${link}.\n` : `Please click link below below to reset password. In the next step You will be asked to provide new one \n\n${link}`, // plain text body
             html: htmlToSend, // html body
