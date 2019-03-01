@@ -167,7 +167,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.cards = this.cards.filter(card =>
       card.assignedUsers.some(user =>
-        filter.userFilter.some(val => val === user.value)
+        filter.userFilter.some(val => val === user._id)
       )
     );
     this.refreshDataInColumn();

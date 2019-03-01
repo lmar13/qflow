@@ -6,7 +6,6 @@ import { NgSelectModule } from "@ng-select/ng-select";
 // import { WebSocketService } from "../../@core/data/ws.service";
 import { SortablejsModule } from "angular-sortablejs";
 import { Ng2SmartTableModule } from "ng2-smart-table";
-import { TagInputModule } from "ngx-chips";
 import { OrderBy, Where } from "../../@core/pipes";
 import { ThemeModule } from "../../@theme/theme.module";
 import { AddBoardComponent } from "./boards/add-board/add-board.component";
@@ -48,7 +47,6 @@ const PM_COMPONENTS = [
     DragDropModule,
     NbDialogModule.forChild(),
     NbDatepickerModule,
-    TagInputModule,
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,

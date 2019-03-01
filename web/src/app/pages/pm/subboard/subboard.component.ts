@@ -164,7 +164,7 @@ export class SubboardComponent implements OnInit, OnDestroy {
 
     this.subcards = this.subcards.filter(card =>
       card.assignedUsers.some(user =>
-        filter.userFilter.some(val => val === user.value)
+        filter.userFilter.some(val => val === user._id)
       )
     );
     this.refreshDataInColumn();
