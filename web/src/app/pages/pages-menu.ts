@@ -7,11 +7,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: "/pages/dashboard",
     home: true
   },
-  // {
-  //   title: "LeanKit",
-  //   icon: "nb-tables",
-  //   link: "/pages/leankit"
-  // },
   {
     title: "LEANKIT",
     group: true
@@ -25,20 +20,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: "Project Manager",
     icon: "nb-tables",
     link: "/pages/pm"
-    // children: [
-    //   {
-    //     title: "Create",
-    //     link: "/pages/pm/create"
-    //   },
-    //   {
-    //     title: "All projects",
-    //     link: "/pages/pm"
-    //   },
-    //   {
-    //     title: "My projects",
-    //     link: "/pages/pm/user"
-    //   }
-    // ]
   },
   {
     title: "FEATURES",

@@ -49,7 +49,6 @@ export class EditBoardComponent {
   private createForm(board: Board) {
     this.form = this.fb.group({
       title: [board.title, Validators.required],
-      // assignedUsers: [this.board.assignedUsers, Validators.required],
       owner: [board.owner.email],
       startDate: [new Date(board.startDate), Validators.required],
       endDate: [new Date(board.endDate)]

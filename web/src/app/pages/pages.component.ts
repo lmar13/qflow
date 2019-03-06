@@ -1,7 +1,8 @@
 import { Component } from "@angular/core";
-
-import { MENU_ITEMS } from "./pages-menu";
+import { NbMenuItem } from "@nebular/theme";
 import { AuthService } from "../@core/auth/shared/auth.service";
+import { MenuService } from './../@core/data/menu.service';
+
 
 @Component({
   selector: "ngx-pages",
@@ -13,20 +14,15 @@ import { AuthService } from "../@core/auth/shared/auth.service";
   `
 })
 export class PagesComponent {
-  menu = MENU_ITEMS;
+  menu = [] as NbMenuItem[];
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private menuService: MenuService) {
     if (this.authService.decToken.role !== "admin") {
-      this.menu = MENU_ITEMS.filter(val => {
-        if (val.title === "Statistics") {
-          val.children = val.children.filter(
-            res => res.title === "My projects"
-          );
-        }
-        if (val.title !== "Admin Panel") {
-          return true;
-        }
-      });
+      this.menuService.getMenuForUser().subscribe(menu => this.menu = menu);
+    }
+    else {
+      this.menuService.getMenuForAdmin().subscribe(menu => this.menu = menu);
     }
   }
 }
