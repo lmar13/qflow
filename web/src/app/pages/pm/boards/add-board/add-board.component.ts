@@ -53,7 +53,6 @@ export class AddBoardComponent {
 
     this.form = this.fb.group({
       title: ["", Validators.required],
-      assignedUsers: ["", Validators.required],
       owner: [email],
       startDate: [new Date(Date.now()), Validators.required],
       endDate: [new Date(Date.now()), Validators.required]

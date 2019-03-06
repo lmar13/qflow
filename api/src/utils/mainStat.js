@@ -87,12 +87,12 @@ const summaryForUsers = (res, users) => {
     const firstDayOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
 
     Board.find({
-        'assignedUsers.value': {
+        'assignedUsers._id': {
             $in: users.map(user => user._id)
         }
     }).exec((err, boards) => {
         Card.find({
-            'assignedUsers.value': {
+            'assignedUsers._id': {
                 $in: users.map(user => user._id)
             }
         }).exec((err, cards) => {

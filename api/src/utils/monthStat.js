@@ -11,7 +11,7 @@ const monthMatchForUsers = users => {
 
     return [{
         $match: {
-            'assignedUsers.value': {
+            'assignedUsers._id': {
                 $in: users.map(user => user._id)
             },
             startDate: {

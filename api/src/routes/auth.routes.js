@@ -21,7 +21,7 @@ module.exports = function (app) {
     } = req.body;
     const password = req.body.passwords.pass;
 
-    newUser = {
+    const newUser = {
       email,
       empId,
       name,
