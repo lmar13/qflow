@@ -95,10 +95,8 @@ export class EditCardComponent implements OnDestroy {
       });
       this.getDefaultData();
       this.createForm();
-      setTimeout(
-        () => this.form.controls["columnId"].setValue(this.card.columnId),
-        0
-      );
+      setTimeout(() =>
+        this.form.controls["columnId"].setValue(this.card.columnId), 0);
     } else {
       alert("You need to choose card first");
     }

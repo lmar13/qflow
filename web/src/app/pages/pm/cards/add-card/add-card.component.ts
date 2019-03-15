@@ -16,6 +16,7 @@ export class AddCardComponent implements OnDestroy {
   @Input() boardId: string;
   @Input() users: User[];
   @Input() columns: Column[];
+  @Input() cardId: string;
 
   @Output() onAddCard = new EventEmitter<Card>();
 
@@ -79,6 +80,10 @@ export class AddCardComponent implements OnDestroy {
       boardId: this.boardId,
       order: 0
     };
+
+    if(this.cardId) {
+      formData.cardId = this.cardId
+    }
 
     console.log(formData);
 

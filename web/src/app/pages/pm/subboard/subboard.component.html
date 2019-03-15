@@ -3,7 +3,7 @@
 
     <nb-actions size="small" style="width: 100%;">
       <nb-action>
-        <ngx-add-card [boardId]="board._id" [columns]="columns" [users]="users" (onAddCard)="addCard($event)"></ngx-add-card>
+        <ngx-add-card [boardId]="board._id" [cardId]="card._id" [columns]="columns" [users]="users" (onAddCard)="addCard($event)"></ngx-add-card>
       </nb-action>
       <nb-action [class.disabled]="!selectedCard" [disabled]="!selectedCard">
         <ngx-edit-card [users]="users" [columns]="columns" [selected]="selectedCard" (onEditCard)="editCard($event)">
